@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f766e" />
+  <title>LA 학생인솔 NFC 출결관리 v0.3</title>
+  <style>
+    :root{
+      --bg:#f6f7fb; --card:#ffffff; --ink:#111827; --muted:#6b7280; --line:#e5e7eb;
+      --primary:#0f766e; --primary2:#0d9488; --danger:#dc2626; --warn:#d97706; --ok:#16a34a;
+      --soft:#ecfeff; --shadow:0 8px 20px rgba(15,23,42,.08); --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.45}
+    button,input,select,textarea{font:inherit}
+    .app{max-width:1180px;margin:0 auto;padding:14px 14px 82px}
+    header{position:sticky;top:0;z-index:20;background:rgba(246,247,251,.92);backdrop-filter:blur(10px);padding:12px 0 8px;border-bottom:1px solid rgba(229,231,235,.8)}
+    .top{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    h1{font-size:21px;margin:0;font-weight:850;letter-spacing:-.04em}.sub{font-size:12px;color:var(--muted);margin-top:2px}
+    .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 10px;font-size:12px;color:#374151;white-space:nowrap}
+    .tabs{display:flex;gap:8px;overflow:auto;padding:10px 0 2px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+    .tab{border:1px solid var(--line);background:#fff;color:#374151;border-radius:999px;padding:9px 12px;white-space:nowrap;cursor:pointer;font-weight:650;font-size:14px}
+    .tab.active{background:var(--primary);border-color:var(--primary);color:#fff}
+    .grid{display:grid;gap:12px}.grid.cols4{grid-template-columns:repeat(4,1fr)}.grid.cols3{grid-template-columns:repeat(3,1fr)}.grid.cols2{grid-template-columns:repeat(2,1fr)}
+    .card{background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius);padding:14px;margin-top:12px}
+    .card h2{font-size:18px;margin:0 0 10px;font-weight:850;letter-spacing:-.03em}.card h3{font-size:15px;margin:14px 0 8px;font-weight:800;color:#1f2937}
+    .metric{background:linear-gradient(180deg,#fff,#f8fafc);border:1px solid var(--line);border-radius:16px;padding:14px}.metric .label{font-size:13px;color:var(--muted)}.metric .num{font-size:30px;font-weight:900;margin-top:4px;letter-spacing:-.05em}.metric.ok .num{color:var(--ok)}.metric.warn .num{color:var(--warn)}.metric.danger .num{color:var(--danger)}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.grow{flex:1}.hidden{display:none!important}
+    label{display:block;font-size:12px;color:#4b5563;font-weight:700;margin:8px 0 4px}
+    input,select,textarea{width:100%;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 11px;outline:none}textarea{min-height:82px;resize:vertical}
+    input:focus,select:focus,textarea:focus{border-color:var(--primary2);box-shadow:0 0 0 3px rgba(13,148,136,.13)}
+    button{border:0;border-radius:12px;background:#e5e7eb;color:#111827;padding:10px 12px;cursor:pointer;font-weight:750;transition:.15s transform,.15s opacity,.15s background}.btn:hover{transform:translateY(-1px)}button:disabled{opacity:.55;cursor:not-allowed;transform:none}
+    .primary{background:var(--primary);color:#fff}.secondary{background:#134e4a;color:#fff}.danger{background:#dc2626;color:#fff}.warn{background:#f59e0b;color:#111827}.ghost{background:#fff;border:1px solid var(--line);color:#374151}.soft{background:var(--soft);color:#115e59;border:1px solid #99f6e4}.small{font-size:12px;padding:7px 9px;border-radius:10px}.wide{width:100%}
+    table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden}th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;font-size:13px;vertical-align:top}th{background:#f9fafb;color:#374151;font-weight:850;white-space:nowrap}tr:last-child td{border-bottom:0}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:14px}.nowrap{white-space:nowrap}.muted{color:var(--muted)}.note{font-size:12px;color:var(--muted)}
+    .status{border-radius:14px;padding:10px 12px;background:#f9fafb;border:1px solid var(--line);font-size:13px}.status.good{background:#f0fdf4;border-color:#bbf7d0;color:#14532d}.status.bad{background:#fef2f2;border-color:#fecaca;color:#7f1d1d}.status.wait{background:#fffbeb;border-color:#fde68a;color:#78350f}.status.info{background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a}
+    .list{display:grid;gap:8px}.person{display:flex;align-items:center;justify-content:space-between;gap:8px;border:1px solid var(--line);background:#fff;border-radius:13px;padding:10px}.person strong{font-size:14px}.tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:800;background:#f3f4f6;color:#374151}.tag.ok{background:#dcfce7;color:#166534}.tag.danger{background:#fee2e2;color:#991b1b}.tag.warn{background:#fef3c7;color:#92400e}.tag.primary{background:#ccfbf1;color:#115e59}
+    .footerbar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.95);border-top:1px solid var(--line);backdrop-filter:blur(10px);z-index:30}.footerinner{max-width:1180px;margin:0 auto;padding:9px 14px;display:flex;gap:8px;align-items:center;justify-content:space-between}.footerinner .mini{font-size:12px;color:#4b5563;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .scanner{border:2px dashed #99f6e4;background:#f0fdfa;border-radius:18px;padding:16px;text-align:center}.bigread{font-size:22px;font-weight:900;color:#0f766e;margin:8px 0;word-break:break-all}.dangerText{color:var(--danger);font-weight:800}.okText{color:var(--ok);font-weight:800}.warnText{color:var(--warn);font-weight:800}
+    .printArea{background:#fff;padding:18px;border-radius:10px}.printTitle{text-align:center;font-size:22px;font-weight:900;margin:6px 0 16px}.printMeta{font-size:13px;margin-bottom:12px}.signature{display:flex;justify-content:space-around;margin-top:36px;font-size:14px}.sigline{display:inline-block;width:180px;border-bottom:1px solid #111;margin-left:8px}
+    .modal{position:fixed;inset:0;background:rgba(15,23,42,.5);display:flex;align-items:flex-end;justify-content:center;padding:12px;z-index:80}.modalBox{width:min(720px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:20px;padding:16px;box-shadow:0 25px 80px rgba(0,0,0,.25)}
+    @media(max-width:850px){.grid.cols4,.grid.cols3,.grid.cols2{grid-template-columns:1fr}.app{padding-left:10px;padding-right:10px}h1{font-size:18px}.metric .num{font-size:25px}th,td{font-size:12px;padding:8px 6px}.hideMobile{display:none}.top{align-items:flex-start}.pill{font-size:11px}}
+    @media print{
+      body{background:#fff}.app header,.tabs,.footerbar,.noPrint,button,.modal{display:none!important}.app{padding:0;max-width:none}.card{box-shadow:none;border:0;margin:0;padding:0}.printOnly{display:block!important}.screenOnly{display:none!important}table{page-break-inside:auto}tr{page-break-inside:avoid;page-break-after:auto}th{background:#f3f4f6!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.printArea{padding:0}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="top">
+      <div>
+        <h1>LA 학생인솔 NFC 출결관리 <span class="muted">v0.2</span></h1>
+        <div class="sub">NFC 태그 쓰기 · 읽기 · 체크포인트별 출결 · 대시보드 · 엑셀 업로드/다운로드</div>
+      </div>
+      <div class="pill" id="envPill">환경 확인 중</div>
+    </div>
+    <nav class="tabs noPrint" id="tabs"></nav>
+  </header>
+
+  <section id="view-dashboard" class="view"></section>
+  <section id="view-students" class="view hidden"></section>
+  <section id="view-write" class="view hidden"></section>
+  <section id="view-check" class="view hidden"></section>
+  <section id="view-records" class="view hidden"></section>
+  <section id="view-print" class="view hidden"></section>
+  <section id="view-settings" class="view hidden"></section>
+</div>
+
+<div class="footerbar noPrint">
+  <div class="footerinner">
+    <div class="mini" id="saveInfo">저장 대기</div>
+    <button class="small soft" onclick="quickSave()">수동저장</button>
+  </div>
+</div>
+
+<div id="modal" class="modal hidden" onclick="closeModal(event)"><div class="modalBox" id="modalBox"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const KEY = 'jcla26_nfc_attendance_v01';
+  const defaultCheckpoints = [
+    {id: uid(), date:'7.26.(일)', name:'제천교육지원청 집결', note:'출발 전 여권·명찰 확인'},
+    {id: uid(), date:'7.26.(일)', name:'인천공항 도착', note:'수하물 위탁 전'},
+    {id: uid(), date:'7.26.(일)', name:'탑승구 집결', note:'탑승 직전'},
+    {id: uid(), date:'7.26.(일)', name:'LA공항 수하물 수령 후', note:'입국 후 전체 확인'},
+    {id: uid(), date:'7.26.(일)', name:'호텔 도착', note:'객실 배정 전'},
+    {id: uid(), date:'7.27.(월)', name:'호텔 조식 후 출발', note:''},
+    {id: uid(), date:'7.27.(월)', name:'점심 후 버스 탑승', note:''},
+    {id: uid(), date:'7.27.(월)', name:'호텔 복귀', note:'취침 점검 전'},
+    {id: uid(), date:'7.28.(화)', name:'NYFA 이동 전', note:''},
+    {id: uid(), date:'7.29.(수)', name:'그로브몰·파머스마켓 자유시간 복귀', note:'자유시간 후 핵심 체크'},
+    {id: uid(), date:'7.30.(목)', name:'호텔 이동/도착 확인', note:'숙소 변경 시 짐 확인'},
+    {id: uid(), date:'7.31.(금)', name:'UCLA 이동 전', note:''},
+    {id: uid(), date:'8.1.(토)', name:'유니버설 스튜디오 입장 전', note:''},
+    {id: uid(), date:'8.1.(토)', name:'유니버설 스튜디오 최종 집결', note:'자유 이동 후 핵심 체크'},
+    {id: uid(), date:'8.2.(일)', name:'LA공항 이동 전', note:'여권·수하물 확인'},
+    {id: uid(), date:'8.3.(월)', name:'인천공항 도착', note:''},
+    {id: uid(), date:'8.3.(월)', name:'제천교육지원청 도착 및 해산', note:'보호자 인계 확인'}
+  ];
+
+  const sampleStudents = [
+    {id: uid(), seq:'1', tagId:'JCLA26-001', name:'김○○', school:'○○초', grade:'초6', gender:'남', group:'1조', leader:'강창원', note:'멀미'},
+    {id: uid(), seq:'2', tagId:'JCLA26-002', name:'이○○', school:'○○중', grade:'중1', gender:'여', group:'1조', leader:'강창원', note:''},
+    {id: uid(), seq:'3', tagId:'JCLA26-003', name:'박○○', school:'○○고', grade:'고1', gender:'남', group:'2조', leader:'강창원', note:'알레르기'}
+  ];
+
+  let state = loadState();
+  let activeTab = 'dashboard';
+  let activeNfcAbort = null;
+  let autoSaveTimer = null;
+
+  const tabs = [
+    ['dashboard','대시보드'], ['students','학생명단'], ['write','NFC 쓰기'], ['check','출결체크'], ['records','출결기록'], ['print','출력·다운로드'], ['settings','설정']
+  ];
+
+  window.addEventListener('load', () => {
+    renderTabs();
+    updateEnv();
+    renderAll();
+  });
+
+  window.addEventListener('beforeunload', () => saveState());
+
+  function uid(){ return 'id_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36).slice(-4); }
+  function nowISO(){ return new Date().toISOString(); }
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function formatDateTime(iso){ const d = new Date(iso); if(isNaN(d)) return iso||''; return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; }
+  function formatTime(iso){ const d = new Date(iso); if(isNaN(d)) return ''; return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; }
+  function escapeHtml(s){ return String(s??'').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
+  function norm(s){ return String(s??'').trim(); }
+  function normalizeTag(s){ return norm(s).replace(/\s+/g,'').toUpperCase(); }
+  function studentSeq(st, idx){ return norm(st?.seq) || (Number.isFinite(idx) ? String(idx+1) : ''); }
+  function gradeText(g){ return norm(g); }
+  function coalesce(...vals){ for(const v of vals){ const n=norm(v); if(n) return n; } return ''; }
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(KEY);
+      if(raw){
+        const obj = JSON.parse(raw);
+        return {
+          students: Array.isArray(obj.students)?obj.students:[],
+          checkpoints: Array.isArray(obj.checkpoints)?obj.checkpoints:defaultCheckpoints,
+          records: Array.isArray(obj.records)?obj.records:[],
+          settings: Object.assign(defaultSettings(), obj.settings || {})
+        };
+      }
+    }catch(e){ console.warn(e); }
+    return {students: [], checkpoints: defaultCheckpoints, records: [], settings: defaultSettings()};
+  }
+  function defaultSettings(){ return { prefix:'JCLA26', nextNumber:1, currentCheckpointId:null, useSound:true, useVibration:true, maskNames:false }; }
+  function saveState(){
+    localStorage.setItem(KEY, JSON.stringify(state));
+    const t = formatDateTime(nowISO());
+    const el = document.getElementById('saveInfo');
+    if(el) el.textContent = `마지막 저장: ${t} · 학생 ${state.students.length}명 · 기록 ${state.records.length}건`;
+  }
+  function scheduleSave(){
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => { saveState(); }, 250);
+  }
+  window.quickSave = () => { saveState(); toast('저장했습니다.'); };
+
+  function renderTabs(){
+    document.getElementById('tabs').innerHTML = tabs.map(([id,label]) => `<button class="tab ${id===activeTab?'active':''}" onclick="switchTab('${id}')">${label}</button>`).join('');
+  }
+  window.switchTab = (id) => {
+    stopNfc();
+    activeTab = id;
+    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    document.getElementById(`view-${id}`).classList.remove('hidden');
+    renderTabs();
+    renderAll();
+    window.scrollTo({top:0, behavior:'smooth'});
+  };
+
+  function renderAll(){
+    renderDashboard(); renderStudents(); renderWrite(); renderCheck(); renderRecords(); renderPrint(); renderSettings(); saveState();
+  }
+
+  function updateEnv(){
+    const isSecure = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    const hasNfc = 'NDEFReader' in window;
+    const p = document.getElementById('envPill');
+    if(hasNfc && isSecure){ p.innerHTML = '✅ NFC 사용 가능 환경'; p.style.borderColor='#99f6e4'; p.style.background='#ecfeff'; }
+    else if(hasNfc && !isSecure){ p.innerHTML = '⚠️ NFC는 HTTPS에서 사용'; p.style.borderColor='#fde68a'; p.style.background='#fffbeb'; }
+    else { p.innerHTML = '🧪 NFC 미지원/테스트 모드'; p.style.borderColor='#fecaca'; p.style.background='#fef2f2'; }
+  }
+
+  function currentCheckpoint(){
+    return state.checkpoints.find(c => c.id === state.settings.currentCheckpointId) || state.checkpoints[0] || null;
+  }
+  function recordsForCheckpoint(cpId){ return state.records.filter(r => r.checkpointId === cpId); }
+  function checkedTagSet(cpId){ return new Set(recordsForCheckpoint(cpId).map(r => normalizeTag(r.tagId))); }
+  function checkedStudentIds(cpId){ return new Set(recordsForCheckpoint(cpId).map(r => r.studentId).filter(Boolean)); }
+  function displayName(s){ return state.settings.maskNames ? maskName(s.name) : s.name; }
+  function maskName(name){ const n = norm(name); if(n.length<=1) return n; if(n.includes('○')) return n; return n[0] + '○'.repeat(Math.max(1,n.length-1)); }
+  function groups(){ return [...new Set(state.students.map(s => norm(s.group)||'미지정'))].sort((a,b)=>a.localeCompare(b,'ko')); }
+
+  function summary(cpId){
+    const sidSet = checkedStudentIds(cpId);
+    const total = state.students.length;
+    const done = state.students.filter(s => sidSet.has(s.id)).length;
+    const manual = recordsForCheckpoint(cpId).filter(r => r.method === '수동').length;
+    return {total, done, missing: Math.max(0,total-done), manual};
+  }
+
+  function renderDashboard(){
+    const cp = currentCheckpoint();
+    const s = cp ? summary(cp.id) : {total:state.students.length,done:0,missing:state.students.length,manual:0};
+    const groupRows = groups().map(g=>{
+      const list = state.students.filter(st => (norm(st.group)||'미지정')===g);
+      const sidSet = cp ? checkedStudentIds(cp.id) : new Set();
+      const done = list.filter(st=>sidSet.has(st.id)).length;
+      return `<tr><td><b>${escapeHtml(g)}</b></td><td>${list.length}</td><td class="okText">${done}</td><td class="${list.length-done?'dangerText':'okText'}">${list.length-done}</td></tr>`;
+    }).join('') || `<tr><td colspan="4" class="muted">학생 명단을 먼저 등록하세요.</td></tr>`;
+    const missing = cp ? state.students.filter(st => !checkedStudentIds(cp.id).has(st.id)) : state.students;
+    const recent = [...state.records].sort((a,b)=> new Date(b.time)-new Date(a.time)).slice(0,8);
+    document.getElementById('view-dashboard').innerHTML = `
+      <div class="card">
+        <div class="between">
+          <div>
+            <h2>현재 체크포인트</h2>
+            <div class="status info"><b>${cp?escapeHtml(cp.date+' · '+cp.name):'체크포인트 없음'}</b>${cp?.note?`<br><span>${escapeHtml(cp.note)}</span>`:''}</div>
+          </div>
+          <div class="row noPrint">
+            <button class="primary" onclick="switchTab('check')">출결 체크 시작</button>
+            <button class="ghost" onclick="switchTab('students')">학생명단 관리</button>
+          </div>
+        </div>
+        <div class="grid cols4" style="margin-top:12px">
+          <div class="metric"><div class="label">전체 학생</div><div class="num">${s.total}</div></div>
+          <div class="metric ok"><div class="label">체크 완료</div><div class="num">${s.done}</div></div>
+          <div class="metric ${s.missing?'danger':'ok'}"><div class="label">미체크</div><div class="num">${s.missing}</div></div>
+          <div class="metric warn"><div class="label">수동 확인</div><div class="num">${s.manual}</div></div>
+        </div>
+      </div>
+      <div class="grid cols2">
+        <div class="card"><h2>조별 현황</h2><div class="tablewrap"><table><thead><tr><th>조</th><th>전체</th><th>체크</th><th>미체크</th></tr></thead><tbody>${groupRows}</tbody></table></div></div>
+        <div class="card"><h2>미체크 학생</h2><div class="list">${missing.length?missing.map(st=>personLine(st, cp?.id)).join(''):'<div class="status good">현재 체크포인트의 미체크 학생이 없습니다.</div>'}</div></div>
+      </div>
+      <div class="card"><h2>최근 체크 기록</h2>${recentTable(recent)}</div>
+    `;
+  }
+
+  function personLine(st, cpId){
+    return `<div class="person"><div><strong>${escapeHtml(displayName(st))}</strong> <span class="tag primary">${escapeHtml(st.group||'미지정')}</span><br><span class="note">${escapeHtml(st.school||'')} ${gradeText(st.grade)?escapeHtml(gradeText(st.grade)):''} ${st.gender?`· ${escapeHtml(st.gender)}`:''} · ${escapeHtml(st.tagId||'태그없음')} ${st.note?`· ${escapeHtml(st.note)}`:''}</span></div>${cpId?`<button class="small ghost" onclick="manualCheck('${st.id}')">수동확인</button>`:''}</div>`;
+  }
+
+  function recentTable(list){
+    if(!list.length) return '<div class="status wait">아직 출결 기록이 없습니다.</div>';
+    return `<div class="tablewrap"><table><thead><tr><th>일시</th><th>체크포인트</th><th>학생</th><th>조</th><th>방식</th><th>비고</th></tr></thead><tbody>${list.map(r=>`<tr><td class="nowrap">${formatDateTime(r.time)}</td><td>${escapeHtml(r.checkpointDate||'')} ${escapeHtml(r.checkpointName||'')}</td><td>${escapeHtml(state.settings.maskNames?maskName(r.name):r.name)}</td><td>${escapeHtml(r.group||'')}</td><td><span class="tag ${r.method==='NFC'?'ok':'warn'}">${escapeHtml(r.method||'')}</span></td><td>${escapeHtml(r.note||'')}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+
+  function renderStudents(){
+    document.getElementById('view-students').innerHTML = `
+      <div class="card">
+        <div class="between"><h2>학생명단</h2><div class="row noPrint"><button class="soft" onclick="openStudentModal()">학생 추가</button><button class="ghost" onclick="assignTags()">NFC ID 자동부여</button><button class="ghost" onclick="downloadStudentTemplateExcel()">엑셀 양식</button><button class="ghost" onclick="downloadStudentExcel()">명단 엑셀</button></div></div>
+        <div class="status info">국외 프로그램 대상자 명단은 <b>연번, 학교, 학년, 이름, 성별, 비고</b> 형식의 엑셀 파일로 업로드합니다. 업로드 후 NFC ID는 자동 부여되며, 태그에는 개인정보 없이 <b>JCLA26-001</b> 같은 고유번호만 저장합니다.</div>
+        <div class="grid cols2 noPrint" style="margin-top:12px">
+          <div>
+            <h3>엑셀 불러오기</h3>
+            <input type="file" accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" onchange="importStudentExcel(event)">
+            <div class="note">필수 헤더: 연번, 학교, 학년, 이름, 성별, 비고 / 학년 예시: 초6, 중1, 고1</div>
+          </div>
+          <div>
+            <h3>빠른 입력</h3>
+            <textarea id="quickStudents" placeholder="한 줄에 한 명: 연번,학교,학년,이름,성별,비고&#10;예) 1,제천초,초6,김학생,남,멀미"></textarea>
+            <button class="primary wide" style="margin-top:8px" onclick="addQuickStudents()">빠른 입력 추가</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="between"><h2>등록 현황 <span class="muted">${state.students.length}명</span></h2><div class="row noPrint"><button class="ghost small" onclick="loadSampleStudents()">샘플 3명 넣기</button><button class="danger small" onclick="clearStudents()">명단 전체삭제</button></div></div>
+        <div class="tablewrap"><table><thead><tr><th>연번</th><th>NFC ID</th><th>학교</th><th>학년</th><th>이름</th><th>성별</th><th>조</th><th>담당</th><th>비고</th><th class="noPrint">관리</th></tr></thead><tbody>
+          ${state.students.map((st,i)=>`<tr><td>${escapeHtml(studentSeq(st,i))}</td><td class="nowrap"><b>${escapeHtml(st.tagId||'')}</b></td><td>${escapeHtml(st.school||'')}</td><td>${escapeHtml(st.grade||'')}</td><td>${escapeHtml(displayName(st))}</td><td>${escapeHtml(st.gender||'')}</td><td>${escapeHtml(st.group||'')}</td><td>${escapeHtml(st.leader||'')}</td><td>${escapeHtml(st.note||'')}</td><td class="noPrint nowrap"><button class="small ghost" onclick="openStudentModal('${st.id}')">수정</button> <button class="small danger" onclick="deleteStudent('${st.id}')">삭제</button></td></tr>`).join('') || '<tr><td colspan="10" class="muted">등록된 학생이 없습니다.</td></tr>'}
+        </tbody></table></div>
+      </div>
+    `;
+  }
+
+  window.openStudentModal = (id='') => {
+    const st = state.students.find(x=>x.id===id) || {id:'', seq:'', tagId:'', name:'', school:'', grade:'', gender:'', group:'', leader:'', note:''};
+    showModal(`
+      <h2>${id?'학생 정보 수정':'학생 추가'}</h2>
+      <div class="grid cols2">
+        <div><label>연번</label><input id="m_seq" value="${escapeHtml(st.seq||'')}" placeholder="1"></div>
+        <div><label>NFC ID</label><input id="m_tagId" value="${escapeHtml(st.tagId)}" placeholder="JCLA26-001"></div>
+        <div><label>학교</label><input id="m_school" value="${escapeHtml(st.school)}"></div>
+        <div><label>학년</label><input id="m_grade" value="${escapeHtml(st.grade)}" placeholder="초6, 중1, 고1"></div>
+        <div><label>이름</label><input id="m_name" value="${escapeHtml(st.name)}" placeholder="김○○"></div>
+        <div><label>성별</label><input id="m_gender" value="${escapeHtml(st.gender||'')}" placeholder="남/여"></div>
+        <div><label>조</label><input id="m_group" value="${escapeHtml(st.group||'')}" placeholder="1조"></div>
+        <div><label>담당 인솔자</label><input id="m_leader" value="${escapeHtml(st.leader||'')}" placeholder="강창원"></div>
+      </div>
+      <label>비고</label><textarea id="m_note">${escapeHtml(st.note)}</textarea>
+      <div class="row" style="margin-top:12px"><button class="primary" onclick="saveStudentModal('${id}')">저장</button><button class="ghost" onclick="hideModal()">닫기</button></div>
+    `);
+  };
+  window.saveStudentModal = (id='') => {
+    const data = {
+      seq: norm(document.getElementById('m_seq').value),
+      tagId: normalizeTag(document.getElementById('m_tagId').value),
+      name: norm(document.getElementById('m_name').value),
+      school: norm(document.getElementById('m_school').value),
+      grade: norm(document.getElementById('m_grade').value),
+      gender: norm(document.getElementById('m_gender').value),
+      group: norm(document.getElementById('m_group').value),
+      leader: norm(document.getElementById('m_leader').value),
+      note: norm(document.getElementById('m_note').value)
+    };
+    if(!data.name){ alert('성명을 입력하세요.'); return; }
+    if(!data.tagId) data.tagId = nextTagId();
+    const dup = state.students.find(s => normalizeTag(s.tagId)===data.tagId && s.id!==id);
+    if(dup && !confirm(`같은 NFC ID를 가진 학생이 있습니다: ${dup.name}\n그래도 저장할까요?`)) return;
+    if(id){ Object.assign(state.students.find(s=>s.id===id), data); }
+    else { state.students.push(Object.assign({id:uid()}, data)); }
+    hideModal(); scheduleSave(); renderAll();
+  };
+  window.deleteStudent = (id) => {
+    const st = state.students.find(s=>s.id===id); if(!st) return;
+    if(confirm(`${st.name} 학생을 삭제할까요?\n기존 출결 기록은 유지됩니다.`)){ state.students = state.students.filter(s=>s.id!==id); scheduleSave(); renderAll(); }
+  };
+  window.clearStudents = () => { if(confirm('학생명단을 모두 삭제할까요? 출결 기록은 유지됩니다.')){ state.students=[]; scheduleSave(); renderAll(); } };
+  window.loadSampleStudents = () => { if(state.students.length && !confirm('기존 명단 뒤에 샘플을 추가할까요?')) return; state.students.push(...sampleStudents.map(s=>Object.assign({},s,{id:uid()}))); scheduleSave(); renderAll(); };
+
+  window.addQuickStudents = () => {
+    const text = document.getElementById('quickStudents').value.trim(); if(!text) return;
+    const lines = text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+    lines.forEach(line=>{
+      const cols = parseDelimitedLine(line);
+      const [seq,school,grade,name,gender,note] = cols;
+      if(norm(name)) state.students.push({id:uid(), seq:norm(seq), tagId:nextTagId(), name:norm(name), school:norm(school), grade:norm(grade), gender:norm(gender), group:'', leader:'', note:norm(note)});
+    });
+    scheduleSave(); renderAll(); toast(`${lines.length}명 추가했습니다.`);
+  };
+
+  function parseDelimitedLine(line){
+    // Simple comma/tab separated input for quick entry only. Excel upload remains the primary method.
+    const sep = line.includes('\t') ? '\t' : ',';
+    return String(line).split(sep).map(x=>x.trim());
+  }
+
+  window.assignTags = () => {
+    const prefix = norm(prompt('태그 접두어를 입력하세요.', state.settings.prefix || 'JCLA26')) || 'JCLA26';
+    let start = parseInt(prompt('시작 번호를 입력하세요.', '1'), 10); if(!Number.isFinite(start)) start=1;
+    state.settings.prefix = prefix;
+    state.students.forEach((s,i)=>{ s.tagId = `${prefix}-${String(start+i).padStart(3,'0')}`; });
+    state.settings.nextNumber = start + state.students.length;
+    scheduleSave(); renderAll();
+  };
+
+  function nextTagId(){
+    let n = Number(state.settings.nextNumber || 1);
+    const prefix = state.settings.prefix || 'JCLA26';
+    let candidate = `${prefix}-${String(n).padStart(3,'0')}`;
+    const used = new Set(state.students.map(s=>normalizeTag(s.tagId)));
+    while(used.has(normalizeTag(candidate))){ n++; candidate = `${prefix}-${String(n).padStart(3,'0')}`; }
+    state.settings.nextNumber = n+1;
+    return candidate;
+  }
+
+  function renderWrite(){
+    const options = state.students.map(s=>`<option value="${s.id}">${escapeHtml(s.tagId||'태그없음')} · ${escapeHtml(s.name)} · ${escapeHtml(s.group||'')}</option>`).join('');
+    document.getElementById('view-write').innerHTML = `
+      <div class="card">
+        <h2>NFC 태그 쓰기</h2>
+        <div class="status wait">안드로이드 Chrome의 HTTPS 환경에서 실제 NFC 쓰기가 가능합니다. PC나 일반 파일 실행 환경에서는 테스트 모드를 사용하세요.</div>
+        <div class="grid cols2" style="margin-top:12px">
+          <div>
+            <label>학생 선택</label><select id="writeStudent" onchange="updateWritePreview()"><option value="">학생 선택</option>${options}</select>
+            <label>태그에 기록할 값</label><input id="writeValue" placeholder="JCLA26-001">
+            <div class="row" style="margin-top:10px"><button class="primary" onclick="writeNfcTag()">NFC 태그 쓰기</button><button class="ghost" onclick="readNfcOnceForWrite()">태그 읽어 검증</button></div>
+          </div>
+          <div class="scanner">
+            <div class="note">현재 태그 값</div>
+            <div class="bigread" id="writeReadResult">대기 중</div>
+            <div id="writeStatus" class="status info">학생을 선택하고 태그 쓰기를 누르세요.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>쓰기 진행표</h2>
+        <div class="tablewrap"><table><thead><tr><th>No</th><th>NFC ID</th><th>성명</th><th>조</th><th>비고</th></tr></thead><tbody>${state.students.map((s,i)=>`<tr><td>${i+1}</td><td><b>${escapeHtml(s.tagId)}</b></td><td>${escapeHtml(displayName(s))}</td><td>${escapeHtml(s.group||'')}</td><td>${escapeHtml(s.note||'')}</td></tr>`).join('')||'<tr><td colspan="5" class="muted">학생명단을 먼저 등록하세요.</td></tr>'}</tbody></table></div>
+      </div>
+    `;
+  }
+  window.updateWritePreview = () => {
+    const id = document.getElementById('writeStudent').value;
+    const st = state.students.find(s=>s.id===id);
+    document.getElementById('writeValue').value = st ? st.tagId : '';
+  };
+
+  async function ensureNfc(){
+    const isSecure = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+    if(!('NDEFReader' in window)) throw new Error('이 브라우저는 Web NFC를 지원하지 않습니다. 안드로이드 Chrome에서 테스트하세요.');
+    if(!isSecure) throw new Error('NFC 기능은 HTTPS 또는 localhost 환경에서만 사용할 수 있습니다.');
+  }
+
+  window.writeNfcTag = async () => {
+    const value = normalizeTag(document.getElementById('writeValue').value);
+    if(!value){ alert('기록할 NFC ID가 없습니다.'); return; }
+    setWriteStatus('wait','태그를 스마트폰 뒷면에 가까이 대세요. 쓰기를 시도합니다...');
+    try{
+      await ensureNfc();
+      const ndef = new NDEFReader();
+      await ndef.write({ records: [{ recordType: 'text', data: value, lang: 'ko' }] });
+      document.getElementById('writeReadResult').textContent = value;
+      setWriteStatus('good',`쓰기 완료: ${value}`);
+      beep('ok'); vibrate([80]);
+    }catch(err){
+      setWriteStatus('bad', err.message || String(err));
+      beep('bad'); vibrate([80,60,80]);
+    }
+  };
+
+  window.readNfcOnceForWrite = async () => {
+    setWriteStatus('wait','읽기 대기 중입니다. 태그를 스마트폰에 대세요.');
+    try{
+      await scanNfcOnce((tag) => {
+        document.getElementById('writeReadResult').textContent = tag || '(빈 값)';
+        setWriteStatus('good',`읽기 완료: ${tag}`);
+      });
+    }catch(err){ setWriteStatus('bad', err.message || String(err)); }
+  };
+  function setWriteStatus(type,msg){ const el=document.getElementById('writeStatus'); if(el){ el.className=`status ${type}`; el.textContent=msg; } }
+
+  function renderCheck(){
+    const cp = currentCheckpoint();
+    const cpOptions = state.checkpoints.map(c=>`<option value="${c.id}" ${cp&&c.id===cp.id?'selected':''}>${escapeHtml(c.date)} · ${escapeHtml(c.name)}</option>`).join('');
+    const sm = cp ? summary(cp.id) : {total:0,done:0,missing:0,manual:0};
+    const missing = cp ? state.students.filter(st => !checkedStudentIds(cp.id).has(st.id)) : [];
+    document.getElementById('view-check').innerHTML = `
+      <div class="card">
+        <h2>출결 체크</h2>
+        <div class="grid cols2">
+          <div>
+            <label>체크포인트 선택</label><select id="cpSelect" onchange="changeCheckpoint(this.value)">${cpOptions}</select>
+            <div class="row" style="margin-top:10px"><button class="primary" onclick="startAttendanceScan()">NFC 스캔 시작</button><button class="danger" onclick="stopNfc()">스캔 중지</button><button class="ghost" onclick="mockScanPrompt()">테스트 입력</button></div>
+            <div class="note" style="margin-top:8px">테스트 입력은 실제 NFC 없이 JCLA26-001 같은 코드를 입력하여 흐름을 확인합니다.</div>
+          </div>
+          <div class="scanner">
+            <div class="note">방금 체크</div>
+            <div class="bigread" id="lastScan">대기 중</div>
+            <div id="scanStatus" class="status info">NFC 스캔 시작을 누르세요.</div>
+          </div>
+        </div>
+        <div class="grid cols4" style="margin-top:12px">
+          <div class="metric"><div class="label">전체</div><div class="num">${sm.total}</div></div>
+          <div class="metric ok"><div class="label">완료</div><div class="num">${sm.done}</div></div>
+          <div class="metric ${sm.missing?'danger':'ok'}"><div class="label">미체크</div><div class="num">${sm.missing}</div></div>
+          <div class="metric warn"><div class="label">수동</div><div class="num">${sm.manual}</div></div>
+        </div>
+      </div>
+      <div class="grid cols2">
+        <div class="card"><h2>미체크 학생</h2><div class="list">${missing.length?missing.map(st=>personLine(st, cp?.id)).join(''):'<div class="status good">미체크 학생이 없습니다.</div>'}</div></div>
+        <div class="card"><h2>현재 체크포인트 기록</h2>${recentTable(cp ? recordsForCheckpoint(cp.id).sort((a,b)=>new Date(b.time)-new Date(a.time)) : [])}</div>
+      </div>
+    `;
+  }
+  window.changeCheckpoint = (id) => { state.settings.currentCheckpointId = id; scheduleSave(); renderAll(); };
+
+  window.startAttendanceScan = async () => {
+    const cp = currentCheckpoint(); if(!cp){ alert('체크포인트가 없습니다.'); return; }
+    stopNfc(false);
+    setScanStatus('wait','NFC 스캔 중입니다. 학생 명찰을 스마트폰 뒷면에 대세요.');
+    try{
+      await ensureNfc();
+      const ndef = new NDEFReader();
+      activeNfcAbort = new AbortController();
+      await ndef.scan({ signal: activeNfcAbort.signal });
+      ndef.onreading = (event) => {
+        const tag = readTextFromMessage(event.message);
+        processScan(tag, 'NFC');
+      };
+      ndef.onreadingerror = () => setScanStatus('bad','태그를 읽지 못했습니다. 다시 대세요.');
+    }catch(err){ setScanStatus('bad', err.message || String(err)); beep('bad'); }
+  };
+
+  function stopNfc(show=true){
+    if(activeNfcAbort){ try{ activeNfcAbort.abort(); }catch(e){} activeNfcAbort=null; }
+    if(show){ const el=document.getElementById('scanStatus'); if(el){ el.className='status info'; el.textContent='스캔을 중지했습니다.'; } }
+  }
+  window.stopNfc = stopNfc;
+
+  async function scanNfcOnce(cb){
+    await ensureNfc();
+    const ndef = new NDEFReader();
+    const controller = new AbortController();
+    await ndef.scan({ signal: controller.signal });
+    ndef.onreading = (event) => {
+      const tag = readTextFromMessage(event.message);
+      controller.abort();
+      cb(tag);
+    };
+    setTimeout(()=>{ try{controller.abort();}catch(e){} }, 20000);
+  }
+
+  function readTextFromMessage(message){
+    for(const record of message.records){
+      if(record.recordType === 'text'){
+        const dec = new TextDecoder(record.encoding || 'utf-8');
+        return normalizeTag(dec.decode(record.data));
+      }
+      if(record.recordType === 'url'){
+        const dec = new TextDecoder('utf-8');
+        return normalizeTag(dec.decode(record.data));
+      }
+    }
+    return '';
+  }
+
+  function processScan(rawTag, method='NFC'){
+    const tag = normalizeTag(rawTag);
+    const cp = currentCheckpoint();
+    if(!tag){ setScanStatus('bad','태그 값이 비어 있습니다.'); beep('bad'); return; }
+    const st = state.students.find(s => normalizeTag(s.tagId) === tag);
+    if(!st){
+      document.getElementById('lastScan').textContent = tag;
+      setScanStatus('bad',`미등록 태그입니다: ${tag}`);
+      beep('bad'); vibrate([80,60,80]);
+      return;
+    }
+    const already = recordsForCheckpoint(cp.id).find(r => r.studentId === st.id);
+    if(already){
+      document.getElementById('lastScan').textContent = `${displayName(st)} · ${st.group||''}`;
+      setScanStatus('wait',`이미 체크됨: ${displayName(st)} (${formatTime(already.time)})`);
+      beep('warn'); vibrate([40,40]);
+      return;
+    }
+    addRecord(st, cp, method, '');
+    document.getElementById('lastScan').textContent = `${displayName(st)} · ${st.group||''}`;
+    setScanStatus('good',`체크 완료: ${displayName(st)} · ${formatTime(nowISO())}`);
+    beep('ok'); vibrate([70]);
+    scheduleSave(); renderDashboard(); renderCheck();
+  }
+  function setScanStatus(type,msg){ const el=document.getElementById('scanStatus'); if(el){ el.className=`status ${type}`; el.textContent=msg; } }
+
+  window.mockScanPrompt = () => { const v = prompt('테스트할 NFC ID를 입력하세요.', 'JCLA26-001'); if(v) processScan(v, '테스트'); };
+  window.manualCheck = (studentId) => {
+    const st = state.students.find(s=>s.id===studentId); const cp=currentCheckpoint(); if(!st||!cp) return;
+    if(recordsForCheckpoint(cp.id).find(r=>r.studentId===st.id)){ alert('이미 체크된 학생입니다.'); return; }
+    const note = prompt(`${st.name} 학생을 수동 확인 처리합니다. 비고를 입력하세요.`, '인솔자 직접 확인') || '인솔자 직접 확인';
+    addRecord(st, cp, '수동', note); scheduleSave(); renderAll();
+  };
+
+  function addRecord(st, cp, method, note){
+    state.records.push({ id:uid(), checkpointId:cp.id, checkpointDate:cp.date, checkpointName:cp.name, studentId:st.id, seq:st.seq||'', tagId:st.tagId, name:st.name, school:st.school, grade:st.grade, gender:st.gender||'', group:st.group, leader:st.leader, time:nowISO(), method, note:note||'' });
+  }
+
+  function renderRecords(){
+    const cpOptions = [`<option value="all">전체</option>`].concat(state.checkpoints.map(c=>`<option value="${c.id}">${escapeHtml(c.date)} · ${escapeHtml(c.name)}</option>`)).join('');
+    document.getElementById('view-records').innerHTML = `
+      <div class="card">
+        <div class="between"><h2>출결기록</h2><div class="row noPrint"><button class="ghost" onclick="downloadRecordsExcel()">전체 기록 엑셀</button><button class="danger" onclick="clearRecords()">기록 전체삭제</button></div></div>
+        <div class="row noPrint"><div class="grow"><label>체크포인트 필터</label><select id="recordFilter" onchange="renderRecordTable()">${cpOptions}</select></div><div class="grow"><label>검색</label><input id="recordSearch" placeholder="학생명, 태그, 조 검색" oninput="renderRecordTable()"></div></div>
+      </div>
+      <div class="card"><div id="recordTable"></div></div>
+    `;
+    renderRecordTable();
+  }
+  window.renderRecordTable = () => {
+    const filter = document.getElementById('recordFilter')?.value || 'all';
+    const q = norm(document.getElementById('recordSearch')?.value).toLowerCase();
+    let list = [...state.records];
+    if(filter !== 'all') list = list.filter(r=>r.checkpointId===filter);
+    if(q) list = list.filter(r => `${r.name} ${r.tagId} ${r.group} ${r.school} ${r.checkpointName}`.toLowerCase().includes(q));
+    list.sort((a,b)=> new Date(b.time)-new Date(a.time));
+    document.getElementById('recordTable').innerHTML = recentTable(list) + `<div class="note" style="margin-top:8px">표시 ${list.length}건 / 전체 ${state.records.length}건</div>`;
+  };
+  window.clearRecords = () => { if(confirm('출결기록을 모두 삭제할까요? 이 작업은 되돌릴 수 없습니다.')){ state.records=[]; scheduleSave(); renderAll(); } };
+
+  function renderPrint(){
+    const cp = currentCheckpoint();
+    const cpOptions = state.checkpoints.map(c=>`<option value="${c.id}" ${cp&&c.id===cp.id?'selected':''}>${escapeHtml(c.date)} · ${escapeHtml(c.name)}</option>`).join('');
+    document.getElementById('view-print').innerHTML = `
+      <div class="card noPrint">
+        <h2>출력·다운로드</h2>
+        <div class="grid cols2">
+          <div><label>출력할 체크포인트</label><select id="printCp" onchange="renderPrintArea()">${cpOptions}</select></div>
+          <div><label>출력 종류</label><select id="printType" onchange="renderPrintArea()"><option value="checkpoint">체크포인트별 출결표</option><option value="students">학생 명단표</option><option value="tags">NFC 태그 발급표</option><option value="daily">일자별 요약표</option><option value="logs">전체 로그표</option></select></div>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button class="primary" onclick="window.print()">인쇄 / PDF 저장</button>
+          <button class="ghost" onclick="downloadRecordsExcel()">출결 엑셀</button>
+          <button class="ghost" onclick="downloadStudentExcel()">학생 엑셀</button>
+          <button class="secondary" onclick="downloadBackupJson()">JSON 백업</button>
+          <label class="ghost" style="display:inline-flex;align-items:center;cursor:pointer;margin:0">JSON 복원<input type="file" accept="application/json,.json" onchange="restoreBackupJson(event)" style="display:none"></label>
+        </div>
+      </div>
+      <div class="card"><div id="printArea" class="printArea"></div></div>
+    `;
+    renderPrintArea();
+  }
+  window.renderPrintArea = () => {
+    const cpId = document.getElementById('printCp')?.value || currentCheckpoint()?.id;
+    const type = document.getElementById('printType')?.value || 'checkpoint';
+    const cp = state.checkpoints.find(c=>c.id===cpId) || currentCheckpoint();
+    let html = '';
+    if(type==='students') html = printStudents();
+    else if(type==='tags') html = printTags();
+    else if(type==='daily') html = printDaily();
+    else if(type==='logs') html = printLogs();
+    else html = printCheckpoint(cp);
+    const el=document.getElementById('printArea'); if(el) el.innerHTML = html;
+  };
+  function printHeader(title, meta=''){
+    return `<div class="printTitle">${escapeHtml(title)}</div><div class="printMeta">${meta}</div>`;
+  }
+  function printStudents(){
+    return printHeader('LA 학생인솔 학생 명단표', `출력일시: ${formatDateTime(nowISO())}`) + `<table><thead><tr><th>연번</th><th>NFC ID</th><th>학교</th><th>학년</th><th>이름</th><th>성별</th><th>조</th><th>담당</th><th>비고</th></tr></thead><tbody>${state.students.map((s,i)=>`<tr><td>${escapeHtml(studentSeq(s,i))}</td><td>${escapeHtml(s.tagId)}</td><td>${escapeHtml(s.school)}</td><td>${escapeHtml(s.grade)}</td><td>${escapeHtml(displayName(s))}</td><td>${escapeHtml(s.gender||'')}</td><td>${escapeHtml(s.group)}</td><td>${escapeHtml(s.leader)}</td><td>${escapeHtml(s.note)}</td></tr>`).join('')}</tbody></table>` + signBlock();
+  }
+  function printTags(){
+    return printHeader('NFC 태그 발급표', `태그 저장값은 개인정보가 아닌 고유번호입니다. · 출력일시: ${formatDateTime(nowISO())}`) + `<table><thead><tr><th>연번</th><th>NFC ID</th><th>학교</th><th>학년</th><th>이름</th><th>성별</th><th>쓰기 확인</th><th>비고</th></tr></thead><tbody>${state.students.map((s,i)=>`<tr><td>${escapeHtml(studentSeq(s,i))}</td><td><b>${escapeHtml(s.tagId)}</b></td><td>${escapeHtml(s.school)}</td><td>${escapeHtml(s.grade)}</td><td>${escapeHtml(displayName(s))}</td><td>${escapeHtml(s.gender||'')}</td><td>□</td><td>${escapeHtml(s.note)}</td></tr>`).join('')}</tbody></table>` + signBlock();
+  }
+  function printCheckpoint(cp){
+    if(!cp) return '<div class="status wait">체크포인트가 없습니다.</div>';
+    const recs = recordsForCheckpoint(cp.id).sort((a,b)=>new Date(a.time)-new Date(b.time));
+    const sidSet = checkedStudentIds(cp.id);
+    const missing = state.students.filter(s=>!sidSet.has(s.id));
+    const sm = summary(cp.id);
+    return printHeader('체크포인트별 출결표', `체크포인트: ${escapeHtml(cp.date)} ${escapeHtml(cp.name)}<br>전체 ${sm.total}명 / 체크 ${sm.done}명 / 미체크 ${sm.missing}명 / 수동 ${sm.manual}명 · 출력일시: ${formatDateTime(nowISO())}`)
+    + `<h3>체크 완료</h3><table><thead><tr><th>No</th><th>체크시간</th><th>NFC ID</th><th>성명</th><th>조</th><th>방식</th><th>비고</th></tr></thead><tbody>${recs.map((r,i)=>`<tr><td>${i+1}</td><td>${formatDateTime(r.time)}</td><td>${escapeHtml(r.tagId)}</td><td>${escapeHtml(state.settings.maskNames?maskName(r.name):r.name)}</td><td>${escapeHtml(r.group)}</td><td>${escapeHtml(r.method)}</td><td>${escapeHtml(r.note)}</td></tr>`).join('') || '<tr><td colspan="7">기록 없음</td></tr>'}</tbody></table>`
+    + `<h3>미체크 학생</h3><table><thead><tr><th>연번</th><th>NFC ID</th><th>학교</th><th>학년</th><th>이름</th><th>성별</th><th>조</th><th>담당</th><th>확인</th></tr></thead><tbody>${missing.map((s,i)=>`<tr><td>${escapeHtml(studentSeq(s,i))}</td><td>${escapeHtml(s.tagId)}</td><td>${escapeHtml(s.school)}</td><td>${escapeHtml(s.grade)}</td><td>${escapeHtml(displayName(s))}</td><td>${escapeHtml(s.gender||'')}</td><td>${escapeHtml(s.group)}</td><td>${escapeHtml(s.leader)}</td><td>□</td></tr>`).join('') || '<tr><td colspan="9">없음</td></tr>'}</tbody></table>` + signBlock();
+  }
+  function printDaily(){
+    const dates = [...new Set(state.checkpoints.map(c=>c.date))];
+    return printHeader('일자별 출결 요약표', `출력일시: ${formatDateTime(nowISO())}`) + `<table><thead><tr><th>일자</th><th>체크포인트</th><th>전체</th><th>체크</th><th>미체크</th><th>수동</th></tr></thead><tbody>${dates.map(d=>state.checkpoints.filter(c=>c.date===d).map(c=>{const sm=summary(c.id);return `<tr><td>${escapeHtml(d)}</td><td>${escapeHtml(c.name)}</td><td>${sm.total}</td><td>${sm.done}</td><td>${sm.missing}</td><td>${sm.manual}</td></tr>`}).join('')).join('')}</tbody></table>` + signBlock();
+  }
+  function printLogs(){
+    const list = [...state.records].sort((a,b)=>new Date(a.time)-new Date(b.time));
+    return printHeader('전체 출결 로그표', `출력일시: ${formatDateTime(nowISO())} · 총 ${list.length}건`) + `<table><thead><tr><th>No</th><th>일시</th><th>체크포인트</th><th>NFC ID</th><th>학교</th><th>학년</th><th>이름</th><th>성별</th><th>조</th><th>방식</th><th>비고</th></tr></thead><tbody>${list.map((r,i)=>`<tr><td>${i+1}</td><td>${formatDateTime(r.time)}</td><td>${escapeHtml(r.checkpointDate)} ${escapeHtml(r.checkpointName)}</td><td>${escapeHtml(r.tagId)}</td><td>${escapeHtml(r.school||'')}</td><td>${escapeHtml(r.grade||'')}</td><td>${escapeHtml(state.settings.maskNames?maskName(r.name):r.name)}</td><td>${escapeHtml(r.gender||'')}</td><td>${escapeHtml(r.group)}</td><td>${escapeHtml(r.method)}</td><td>${escapeHtml(r.note)}</td></tr>`).join('') || '<tr><td colspan="11">기록 없음</td></tr>'}</tbody></table>` + signBlock();
+  }
+  function signBlock(){ return `<div class="signature"><div>확인자 <span class="sigline"></span></div><div>인솔책임자 <span class="sigline"></span></div></div>`; }
+
+  function renderSettings(){
+    document.getElementById('view-settings').innerHTML = `
+      <div class="card">
+        <h2>설정</h2>
+        <div class="grid cols2">
+          <div><label>태그 접두어</label><input id="setPrefix" value="${escapeHtml(state.settings.prefix||'JCLA26')}"></div>
+          <div><label>다음 자동번호</label><input id="setNext" type="number" value="${Number(state.settings.nextNumber||1)}"></div>
+        </div>
+        <div class="grid cols2" style="margin-top:8px">
+          <label class="row"><input type="checkbox" id="setSound" ${state.settings.useSound?'checked':''} style="width:auto"> 소리 사용</label>
+          <label class="row"><input type="checkbox" id="setVib" ${state.settings.useVibration?'checked':''} style="width:auto"> 진동 사용</label>
+          <label class="row"><input type="checkbox" id="setMask" ${state.settings.maskNames?'checked':''} style="width:auto"> 화면·출력 이름 마스킹</label>
+        </div>
+        <div class="row" style="margin-top:12px"><button class="primary" onclick="saveSettings()">설정 저장</button><button class="ghost" onclick="resetCheckpoints()">기본 체크포인트 복원</button><button class="danger" onclick="factoryReset()">전체 초기화</button></div>
+      </div>
+      <div class="card">
+        <div class="between"><h2>체크포인트 관리</h2><button class="soft noPrint" onclick="openCheckpointModal()">체크포인트 추가</button></div>
+        <div class="tablewrap"><table><thead><tr><th>No</th><th>일자</th><th>체크포인트</th><th>비고</th><th class="noPrint">관리</th></tr></thead><tbody>${state.checkpoints.map((c,i)=>`<tr><td>${i+1}</td><td>${escapeHtml(c.date)}</td><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.note||'')}</td><td class="noPrint nowrap"><button class="small ghost" onclick="openCheckpointModal('${c.id}')">수정</button> <button class="small danger" onclick="deleteCheckpoint('${c.id}')">삭제</button></td></tr>`).join('')}</tbody></table></div>
+      </div>
+      <div class="card">
+        <h2>사용 메모</h2>
+        <div class="status info">실제 NFC 기능은 안드로이드 스마트폰, Chrome, HTTPS 환경에서 테스트하세요. 현장에서는 NFC 실패를 대비해 수동 확인 기능을 함께 사용하세요.</div>
+      </div>
+    `;
+  }
+  window.saveSettings = () => {
+    state.settings.prefix = norm(document.getElementById('setPrefix').value) || 'JCLA26';
+    state.settings.nextNumber = Number(document.getElementById('setNext').value) || 1;
+    state.settings.useSound = document.getElementById('setSound').checked;
+    state.settings.useVibration = document.getElementById('setVib').checked;
+    state.settings.maskNames = document.getElementById('setMask').checked;
+    scheduleSave(); renderAll(); toast('설정을 저장했습니다.');
+  };
+  window.resetCheckpoints = () => { if(confirm('기본 체크포인트로 복원할까요? 기존 체크포인트는 삭제됩니다.')){ state.checkpoints = defaultCheckpoints.map(c=>Object.assign({},c,{id:uid()})); state.settings.currentCheckpointId = state.checkpoints[0]?.id || null; scheduleSave(); renderAll(); } };
+  window.factoryReset = () => { if(confirm('학생명단, 체크포인트, 출결기록, 설정을 모두 초기화할까요?')){ localStorage.removeItem(KEY); state = loadState(); renderAll(); } };
+
+  window.openCheckpointModal = (id='') => {
+    const c = state.checkpoints.find(x=>x.id===id) || {date:'', name:'', note:''};
+    showModal(`<h2>${id?'체크포인트 수정':'체크포인트 추가'}</h2><label>일자</label><input id="cp_date" value="${escapeHtml(c.date)}" placeholder="7.26.(일)"><label>체크포인트명</label><input id="cp_name" value="${escapeHtml(c.name)}" placeholder="호텔 조식 후 출발"><label>비고</label><textarea id="cp_note">${escapeHtml(c.note||'')}</textarea><div class="row" style="margin-top:12px"><button class="primary" onclick="saveCheckpointModal('${id}')">저장</button><button class="ghost" onclick="hideModal()">닫기</button></div>`);
+  };
+  window.saveCheckpointModal = (id='') => {
+    const data = {date:norm(document.getElementById('cp_date').value), name:norm(document.getElementById('cp_name').value), note:norm(document.getElementById('cp_note').value)};
+    if(!data.name){ alert('체크포인트명을 입력하세요.'); return; }
+    if(id) Object.assign(state.checkpoints.find(c=>c.id===id), data); else state.checkpoints.push(Object.assign({id:uid()}, data));
+    if(!state.settings.currentCheckpointId) state.settings.currentCheckpointId = state.checkpoints[0]?.id || null;
+    hideModal(); scheduleSave(); renderAll();
+  };
+  window.deleteCheckpoint = (id) => { if(confirm('체크포인트를 삭제할까요? 기존 기록은 남아 있습니다.')){ state.checkpoints=state.checkpoints.filter(c=>c.id!==id); if(state.settings.currentCheckpointId===id) state.settings.currentCheckpointId=state.checkpoints[0]?.id||null; scheduleSave(); renderAll(); } };
+
+  // Excel / JSON helpers
+  function download(filename, content, mime='text/plain;charset=utf-8'){
+    const blob = new Blob([content], {type:mime}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
+  }
+  function ensureXlsx(){
+    if(typeof XLSX === 'undefined'){
+      alert('엑셀 기능을 사용하려면 XLSX 라이브러리가 로드되어야 합니다.\n\n현재 파일을 인터넷 연결 상태에서 열거나, HTTPS 배포 페이지에서 다시 접속해 주세요.');
+      return false;
+    }
+    return true;
+  }
+  const uploadHeaders = ['연번','학교','학년','이름','성별','비고'];
+  const studentHeaders = ['연번','학교','학년','이름','성별','비고','NFC ID','조','담당 인솔자'];
+  const recordHeaders = ['일시','체크포인트일자','체크포인트','연번','NFC ID','학교','학년','이름','성별','조','담당','확인방식','비고'];
+  function sheetWidths(headers){ return headers.map(h=>({wch: Math.max(12, String(h).length*2)})); }
+  function makeWorkbook(sheetName, rows){
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = sheetWidths(rows[0] || []);
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+    return wb;
+  }
+  function writeWorkbook(filename, sheetName, rows){
+    if(!ensureXlsx()) return;
+    XLSX.writeFile(makeWorkbook(sheetName, rows), filename, {bookType:'xlsx'});
+  }
+  function studentRows(){
+    return [studentHeaders].concat(state.students.map((s,i)=>[studentSeq(s,i),s.school,s.grade,s.name,s.gender||'',s.note||'',s.tagId||'',s.group||'',s.leader||'']));
+  }
+  function recordRows(){
+    return [recordHeaders].concat(state.records.map((r,i)=>[formatDateTime(r.time),r.checkpointDate,r.checkpointName,r.seq||'',r.tagId,r.school,r.grade,r.name,r.gender||'',r.group,r.leader,r.method,r.note]));
+  }
+  window.downloadStudentExcel = () => writeWorkbook(`JCLA26_학생명단_${dateFile()}.xlsx`, '학생명단', studentRows());
+  window.downloadRecordsExcel = () => writeWorkbook(`JCLA26_출결기록_${dateFile()}.xlsx`, '출결기록', recordRows());
+  window.downloadStudentTemplateExcel = () => {
+    const rows = [uploadHeaders,
+      [1,'○○초','초6','김○○','남','멀미'],
+      [2,'○○중','중1','이○○','여',''],
+      [3,'○○고','고1','박○○','남','알레르기']
+    ];
+    writeWorkbook(`JCLA26_국외프로그램_대상자_업로드양식_${dateFile()}.xlsx`, '학생명단', rows);
+  };
+  window.downloadBackupJson = () => { download(`JCLA26_NFC출결_백업_${dateFile()}.json`, JSON.stringify(state,null,2), 'application/json;charset=utf-8'); };
+  window.restoreBackupJson = async (ev) => {
+    const file = ev.target.files?.[0]; if(!file) return;
+    try{
+      const text = await file.text(); const obj = JSON.parse(text);
+      if(!Array.isArray(obj.students) || !Array.isArray(obj.checkpoints) || !Array.isArray(obj.records)) throw new Error('백업 파일 형식이 맞지 않습니다.');
+      if(confirm('현재 데이터를 백업 파일로 교체할까요?')){ state = {students:obj.students, checkpoints:obj.checkpoints, records:obj.records, settings:Object.assign(defaultSettings(), obj.settings||{})}; scheduleSave(); renderAll(); }
+    }catch(e){ alert('복원 실패: ' + e.message); }
+    ev.target.value='';
+  };
+  function dateFile(){ const d=new Date(); return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}`; }
+
+  window.importStudentExcel = async (ev) => {
+    const file = ev.target.files?.[0]; if(!file) return;
+    if(!ensureXlsx()){ ev.target.value=''; return; }
+    try{
+      const buf = await file.arrayBuffer();
+      const wb = XLSX.read(buf, {type:'array'});
+      const sheetName = wb.SheetNames.includes('학생명단') ? '학생명단' : wb.SheetNames[0];
+      const ws = wb.Sheets[sheetName];
+      const rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:''}).filter(r => r.some(c => norm(c)));
+      if(!rows.length) throw new Error('엑셀 시트에 데이터가 없습니다.');
+      const header = rows[0].map(h=>norm(h).toLowerCase().replace(/\s/g,''));
+      const headerNames = ['연번','학교','학년','이름','성별','비고','성명','nfcid','nfc번호','태그','조','담당','담당인솔자'];
+      const hasHeader = header.some(h=>headerNames.includes(h));
+      const dataRows = hasHeader ? rows.slice(1) : rows;
+      if(hasHeader){
+        const required = ['학교','학년','이름'];
+        const missing = required.filter(req => !header.includes(req) && !(req==='이름' && header.includes('성명')));
+        if(missing.length) throw new Error(`필수 헤더가 없습니다: ${missing.join(', ')}`);
+      }
+      let added = 0, updated = 0, skipped = 0;
+      dataRows.forEach((cols, idx)=>{
+        let seq='', school='', grade='', name='', gender='', note='', tagId='', group='', leader='';
+        if(hasHeader){
+          const get = (names) => { const idx = header.findIndex(h=>names.includes(h)); return idx>=0 ? cols[idx] : ''; };
+          seq = get(['연번','no','번호']);
+          school = get(['학교','school']);
+          grade = get(['학년','grade']);
+          name = get(['이름','성명','name']);
+          gender = get(['성별','gender','sex']);
+          note = get(['비고','note','특이사항']);
+          tagId = get(['nfcid','nfc번호','태그','태그id','nfc']);
+          group = get(['조','group']);
+          leader = get(['담당인솔자','담당','인솔자','leader']);
+        } else {
+          [seq, school, grade, name, gender, note] = cols;
+        }
+        if(!norm(name)){ skipped++; return; }
+        const row = { 
+          seq:norm(seq) || String(state.students.length + added + 1),
+          tagId:normalizeTag(tagId)||nextTagId(),
+          name:norm(name),
+          school:norm(school),
+          grade:norm(grade),
+          gender:norm(gender),
+          group:norm(group),
+          leader:norm(leader),
+          note:norm(note)
+        };
+        const existing = state.students.find(s => (row.tagId && normalizeTag(s.tagId) === row.tagId) || (norm(s.name)===row.name && norm(s.school)===row.school && norm(s.grade)===row.grade));
+        if(existing){ Object.assign(existing, row); updated++; }
+        else { state.students.push(Object.assign({id:uid()}, row)); added++; }
+      });
+      scheduleSave(); renderAll(); toast(`엑셀 명단 불러오기 완료: 추가 ${added}명, 갱신 ${updated}명, 제외 ${skipped}행`);
+    }catch(e){ alert('엑셀 불러오기 실패: '+e.message); }
+    ev.target.value='';
+  };
+
+  function showModal(html){ document.getElementById('modalBox').innerHTML=html; document.getElementById('modal').classList.remove('hidden'); }
+  window.hideModal = () => document.getElementById('modal').classList.add('hidden');
+  window.closeModal = (ev) => { if(ev.target.id==='modal') hideModal(); };
+
+  function toast(msg){
+    const d=document.createElement('div'); d.textContent=msg; d.style.cssText='position:fixed;left:50%;bottom:78px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:999px;z-index:100;font-weight:800;font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.25)'; document.body.appendChild(d); setTimeout(()=>d.remove(),1800);
+  }
+  function vibrate(pattern){ if(state.settings.useVibration && navigator.vibrate) navigator.vibrate(pattern); }
+  function beep(kind='ok'){
+    if(!state.settings.useSound) return;
+    try{
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = kind==='ok' ? 880 : kind==='warn' ? 520 : 220;
+      gain.gain.value = 0.045; osc.start();
+      setTimeout(()=>{ osc.stop(); ctx.close(); }, kind==='ok'?90:150);
+    }catch(e){}
+  }
+
+  // expose a few functions intentionally
+  window.processScan = processScan;
+})();
+</script>
+</body>
+</html>
