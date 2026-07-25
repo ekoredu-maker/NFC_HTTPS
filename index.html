@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="icon-192.png" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <title>LA 학생인솔 NFC 출결관리 v1.3 NFC 현장복구판</title>
+  <title>LA 학생인솔 NFC 출결관리 v0.7 GPS·초기화</title>
   <style>
 
     :root{
@@ -100,7 +100,7 @@
       <div class="brand">
         <img class="brandLogo" src="data:image/png;base64,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" alt="JCLA26 NFC 아이콘">
         <div class="brandText">
-          <h1>LA 학생인솔 NFC 출결관리 <span class="muted" style="color:rgba(255,255,255,.88)">v1.3 NFC 현장복구판</span></h1>
+          <h1>LA 학생인솔 NFC 출결관리 <span class="muted" style="color:rgba(255,255,255,.88)">v0.7 GPS·초기화</span></h1>
           <div class="sub">자동 NFC 스캔 · 카톡방 공유용 요약 · 체크포인트별 통계 · 보고서 출력 · 엑셀 다운로드</div>
         </div>
       </div>
@@ -135,44 +135,23 @@
 
   const KEY = 'jcla26_nfc_attendance_v01';
   const defaultCheckpoints = [
-    {"date": "7.26.(일)", "name": "제천교육지원청 집결", "note": "제천교육지원청 주차장 집결 및 출발 전 확인", "lat": 37.145, "lng": 128.2127, "radiusM": 700, "scheduleKey": "jecheon-office"},
-    {"date": "7.26.(일)", "name": "인천공항 도착", "note": "출국수속 전 전체 확인", "lat": 37.4602, "lng": 126.4407, "radiusM": 1600, "scheduleKey": "icn-arrival"},
-    {"date": "7.26.(일)", "name": "탑승구 집결", "note": "OZ202 탑승 직전 확인", "lat": 37.4602, "lng": 126.4407, "radiusM": 1600, "scheduleKey": "icn-gate"},
-    {"date": "7.26.(일)", "name": "LA공항 도착", "note": "입국심사·수하물 수령 후 확인", "lat": 33.9416, "lng": -118.4085, "radiusM": 1800, "scheduleKey": "lax-arrival"},
-    {"date": "7.26.(일)", "name": "산타모니카 비치", "note": "견학 후 출발 전 확인", "lat": 34.0094, "lng": -118.4973, "radiusM": 900, "scheduleKey": "santa-monica-beach"},
-    {"date": "7.26.(일)", "name": "더 게티 센터", "note": "관람 후 버스 탑승 전 확인", "lat": 34.078, "lng": -118.4741, "radiusM": 900, "scheduleKey": "getty-center"},
-    {"date": "7.26.(일)", "name": "더블트리 로즈미드 호텔", "note": "호텔 체크인·객실 배정 전 확인", "lat": 34.036, "lng": -118.081, "radiusM": 600, "scheduleKey": "hotel-rosemead"},
-    {"date": "7.27.(월)", "name": "더블트리 로즈미드 호텔 출발", "note": "호텔 조식 후 출발 전 확인", "lat": 34.036, "lng": -118.081, "radiusM": 600, "scheduleKey": "hotel-rosemead-start-0727"},
-    {"date": "7.27.(월)", "name": "헐리우드 거리", "note": "문화탐방 후 집결 확인", "lat": 34.1016, "lng": -118.3269, "radiusM": 900, "scheduleKey": "hollywood-walk"},
-    {"date": "7.27.(월)", "name": "피터슨 자동차 박물관", "note": "관람 후 버스 탑승 전 확인", "lat": 34.0622, "lng": -118.3611, "radiusM": 400, "scheduleKey": "petersen-museum"},
-    {"date": "7.27.(월)", "name": "아카데미 영화 박물관", "note": "관람 후 버스 탑승 전 확인", "lat": 34.0632, "lng": -118.3619, "radiusM": 400, "scheduleKey": "academy-museum"},
-    {"date": "7.27.(월)", "name": "더블트리 로즈미드 호텔 복귀", "note": "호텔 복귀·취침 점검 전 확인", "lat": 34.036, "lng": -118.081, "radiusM": 600, "scheduleKey": "hotel-rosemead-end-0727"},
-    {"date": "7.28.(화)", "name": "더블트리 로즈미드 호텔 출발", "note": "NYFA 이동 전 확인", "lat": 34.036, "lng": -118.081, "radiusM": 600, "scheduleKey": "hotel-rosemead-start-0728"},
-    {"date": "7.28.(화)", "name": "NYFA LA 캠퍼스", "note": "NYFA 프로그램 참여 후 확인", "lat": 34.1531, "lng": -118.3423, "radiusM": 900, "scheduleKey": "nyfa-la-0728"},
-    {"date": "7.28.(화)", "name": "더블트리 로즈미드 호텔 복귀", "note": "호텔 복귀 확인", "lat": 34.036, "lng": -118.081, "radiusM": 600, "scheduleKey": "hotel-rosemead-end-0728"},
-    {"date": "7.29.(수)", "name": "더블트리 로즈미드 호텔 출발", "note": "NYFA 이동 전 확인", "lat": 34.036, "lng": -118.081, "radiusM": 600, "scheduleKey": "hotel-rosemead-start-0729"},
-    {"date": "7.29.(수)", "name": "NYFA LA 캠퍼스", "note": "NYFA 프로그램 참여 후 확인", "lat": 34.1531, "lng": -118.3423, "radiusM": 900, "scheduleKey": "nyfa-la-0729"},
-    {"date": "7.29.(수)", "name": "그로브 몰 & 파머스 마켓", "note": "자유시간 후 집결 확인", "lat": 34.0719, "lng": -118.357, "radiusM": 700, "scheduleKey": "grove-farmers-market"},
-    {"date": "7.29.(수)", "name": "트레이더 조 마트", "note": "마트 투어 후 버스 탑승 전 확인", "lat": 34.0707, "lng": -118.3614, "radiusM": 500, "scheduleKey": "trader-joes"},
-    {"date": "7.29.(수)", "name": "더블트리 로즈미드 호텔 복귀", "note": "호텔 복귀 확인", "lat": 34.036, "lng": -118.081, "radiusM": 600, "scheduleKey": "hotel-rosemead-end-0729"},
-    {"date": "7.30.(목)", "name": "더블트리 로즈미드 호텔 출발", "note": "숙소 변경일 짐 확인 후 출발", "lat": 34.036, "lng": -118.081, "radiusM": 600, "scheduleKey": "hotel-rosemead-start-0730"},
-    {"date": "7.30.(목)", "name": "캘리포니아 자연사 박물관", "note": "관람 후 버스 탑승 전 확인", "lat": 34.0169, "lng": -118.2888, "radiusM": 600, "scheduleKey": "natural-history-museum"},
-    {"date": "7.30.(목)", "name": "더 브로드", "note": "관람 후 버스 탑승 전 확인", "lat": 34.0545, "lng": -118.25, "radiusM": 500, "scheduleKey": "the-broad"},
-    {"date": "7.30.(목)", "name": "세리토스 도서관", "note": "견학 후 버스 탑승 전 확인", "lat": 33.8673, "lng": -118.0636, "radiusM": 600, "scheduleKey": "cerritos-library"},
-    {"date": "7.30.(목)", "name": "월마트 방문", "note": "마트 방문 후 버스 탑승 전 확인", "lat": 33.8464, "lng": -118.012, "radiusM": 900, "scheduleKey": "walmart"},
-    {"date": "7.30.(목)", "name": "더블트리 부에노파크 호텔", "note": "호텔 도착·객실 배정 전 확인", "lat": 33.857, "lng": -118.0042, "radiusM": 700, "scheduleKey": "hotel-buena-park"},
-    {"date": "7.31.(금)", "name": "더블트리 부에노파크 호텔 출발", "note": "호텔 조식 후 출발 전 확인", "lat": 33.857, "lng": -118.0042, "radiusM": 700, "scheduleKey": "hotel-buena-park-start-0731"},
-    {"date": "7.31.(금)", "name": "UCLA 캠퍼스", "note": "캠퍼스 투어·간담회 후 확인", "lat": 34.0689, "lng": -118.4452, "radiusM": 1000, "scheduleKey": "ucla"},
-    {"date": "7.31.(금)", "name": "올베라 거리·엘 푸에블로", "note": "역사공원 견학 후 집결 확인", "lat": 34.0569, "lng": -118.237, "radiusM": 700, "scheduleKey": "olvera-el-pueblo"},
-    {"date": "7.31.(금)", "name": "그리피스 천문대", "note": "관람 후 버스 탑승 전 확인", "lat": 34.1184, "lng": -118.3004, "radiusM": 900, "scheduleKey": "griffith-observatory"},
-    {"date": "7.31.(금)", "name": "더블트리 부에노파크 호텔 복귀", "note": "호텔 복귀 확인", "lat": 33.857, "lng": -118.0042, "radiusM": 700, "scheduleKey": "hotel-buena-park-end-0731"},
-    {"date": "8.1.(토)", "name": "더블트리 부에노파크 호텔 출발", "note": "유니버설 스튜디오 이동 전 확인", "lat": 33.857, "lng": -118.0042, "radiusM": 700, "scheduleKey": "hotel-buena-park-start-0801"},
-    {"date": "8.1.(토)", "name": "유니버설 스튜디오", "note": "입장 전 또는 최종 집결 시 확인", "lat": 34.1381, "lng": -118.3534, "radiusM": 1100, "scheduleKey": "universal-studios"},
-    {"date": "8.1.(토)", "name": "더블트리 부에노파크 호텔 복귀", "note": "호텔 복귀·마지막 숙박 확인", "lat": 33.857, "lng": -118.0042, "radiusM": 700, "scheduleKey": "hotel-buena-park-end-0801"},
-    {"date": "8.2.(일)", "name": "더블트리 부에노파크 호텔 출발", "note": "공항 이동 전 여권·수하물 확인", "lat": 33.857, "lng": -118.0042, "radiusM": 700, "scheduleKey": "hotel-buena-park-start-0802"},
-    {"date": "8.2.(일)", "name": "LA공항 출발", "note": "OZ201 탑승수속 전 확인", "lat": 33.9416, "lng": -118.4085, "radiusM": 1800, "scheduleKey": "lax-departure"},
-    {"date": "8.3.(월)", "name": "인천공항 도착", "note": "입국 후 제천 이동 전 확인", "lat": 37.4602, "lng": 126.4407, "radiusM": 1600, "scheduleKey": "icn-arrival-return"},
-    {"date": "8.3.(월)", "name": "제천교육지원청 도착 및 해산", "note": "보호자 인계·해산 확인", "lat": 37.145, "lng": 128.2127, "radiusM": 700, "scheduleKey": "jecheon-office-return"}
+    {id: uid(), date:'7.26.(일)', name:'제천교육지원청 집결', note:'출발 전 여권·명찰 확인'},
+    {id: uid(), date:'7.26.(일)', name:'인천공항 도착', note:'수하물 위탁 전'},
+    {id: uid(), date:'7.26.(일)', name:'탑승구 집결', note:'탑승 직전'},
+    {id: uid(), date:'7.26.(일)', name:'LA공항 수하물 수령 후', note:'입국 후 전체 확인'},
+    {id: uid(), date:'7.26.(일)', name:'호텔 도착', note:'객실 배정 전'},
+    {id: uid(), date:'7.27.(월)', name:'호텔 조식 후 출발', note:''},
+    {id: uid(), date:'7.27.(월)', name:'점심 후 버스 탑승', note:''},
+    {id: uid(), date:'7.27.(월)', name:'호텔 복귀', note:'취침 점검 전'},
+    {id: uid(), date:'7.28.(화)', name:'NYFA 이동 전', note:''},
+    {id: uid(), date:'7.29.(수)', name:'그로브몰·파머스마켓 자유시간 복귀', note:'자유시간 후 핵심 체크'},
+    {id: uid(), date:'7.30.(목)', name:'호텔 이동/도착 확인', note:'숙소 변경 시 짐 확인'},
+    {id: uid(), date:'7.31.(금)', name:'UCLA 이동 전', note:''},
+    {id: uid(), date:'8.1.(토)', name:'유니버설 스튜디오 입장 전', note:''},
+    {id: uid(), date:'8.1.(토)', name:'유니버설 스튜디오 최종 집결', note:'자유 이동 후 핵심 체크'},
+    {id: uid(), date:'8.2.(일)', name:'LA공항 이동 전', note:'여권·수하물 확인'},
+    {id: uid(), date:'8.3.(월)', name:'인천공항 도착', note:''},
+    {id: uid(), date:'8.3.(월)', name:'제천교육지원청 도착 및 해산', note:'보호자 인계 확인'}
   ];
 
   const sampleStudents = [
@@ -188,7 +167,6 @@
   let scanUi = {active:false, last:'대기 중', type:'info', message:'NFC 스캔 시작을 누르세요.'};
   let wakeLock = null;
   let autoSaveTimer = null;
-  ensureOfficialSchedulePoints(true);
 
   const tabs = [
     ['dashboard','대시보드'], ['students','학생명단'], ['write','NFC 쓰기'], ['check','출결체크'], ['records','출결기록'], ['print','출력·다운로드'], ['ops','실전점검'], ['settings','설정']
@@ -209,28 +187,7 @@
   function formatTime(iso){ const d = new Date(iso); if(isNaN(d)) return ''; return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`; }
   function escapeHtml(s){ return String(s??'').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
   function norm(s){ return String(s??'').trim(); }
-  
-  function normalizeTag(s){ return extractTagCandidate(norm(s)).replace(/\s+/g,'').toUpperCase(); }
-  function serialKey(s){ return String(s||'').replace(/[^0-9A-Fa-f]/g,'').toUpperCase(); }
-  function tagFromSerial(sn){ const key = serialKey(sn); return key && state.serialMap ? normalizeTag(state.serialMap[key]) : ''; }
-  function readTagFromEvent(event){
-    const textTag = readTextFromMessage(event.message);
-    if(textTag) return textTag;
-    return tagFromSerial(event.serialNumber);
-  }
-  function serialCount(){ return state.serialMap ? Object.keys(state.serialMap).length : 0; }
-  function extractTagCandidate(text){
-    let t = String(text || '').replace(/\u0000/g,'').trim();
-    // URL, 설명문, 다른 앱으로 기록된 텍스트 안에 JCLA26-001 형태가 섞여 있어도 ID만 뽑습니다.
-    const m = t.match(/JCLA26\s*[-_]?\s*(\d{1,3})/i);
-    if(m) return `JCLA26-${String(parseInt(m[1],10)).padStart(3,'0')}`;
-    try{
-      const u = new URL(t);
-      const cand = u.searchParams.get('tag') || u.searchParams.get('id') || u.hash.replace(/^#/, '');
-      if(cand) return extractTagCandidate(cand);
-    }catch(e){}
-    return t;
-  }
+  function normalizeTag(s){ return norm(s).replace(/\s+/g,'').toUpperCase(); }
   function studentSeq(st, idx){ return norm(st?.seq) || (Number.isFinite(idx) ? String(idx+1) : ''); }
   function gradeText(g){ return norm(g); }
   function coalesce(...vals){ for(const v of vals){ const n=norm(v); if(n) return n; } return ''; }
@@ -245,44 +202,14 @@
           checkpoints: Array.isArray(obj.checkpoints)?obj.checkpoints:defaultCheckpoints,
           records: Array.isArray(obj.records)?obj.records:[],
           settings: Object.assign(defaultSettings(), obj.settings || {}),
-          ops: Object.assign(defaultOps(), obj.ops || {}),
-          serialMap: (obj.serialMap && typeof obj.serialMap === 'object') ? obj.serialMap : {}
+          ops: Object.assign(defaultOps(), obj.ops || {})
         };
       }
     }catch(e){ console.warn(e); }
-    return {students: [], checkpoints: defaultCheckpoints, records: [], settings: defaultSettings(), ops: defaultOps(), serialMap: {}};
+    return {students: [], checkpoints: defaultCheckpoints, records: [], settings: defaultSettings(), ops: defaultOps()};
   }
-  function defaultSettings(){ return { prefix:'JCLA26', nextNumber:1, currentCheckpointId:null, useSound:true, useVibration:true, maskNames:false, gpsEnabled:true, autoSelectCheckpoint:true, defaultRadiusM:200, officialScheduleVersion:'', lastLocation:null }; }
+  function defaultSettings(){ return { prefix:'JCLA26', nextNumber:1, currentCheckpointId:null, useSound:true, useVibration:true, maskNames:false, gpsEnabled:true, defaultRadiusM:200, lastLocation:null }; }
   function defaultOps(){ return { checklist:{}, memo:'', lastRehearsal:'' }; }
-
-  function pointIdentity(c){ return `${norm(c.date)}|${norm(c.name)}`; }
-  function ensureOfficialSchedulePoints(silent=false){
-    if(!state.checkpoints) state.checkpoints=[];
-    if(!state.settings) state.settings=defaultSettings();
-    const ver = '2026-jcla-schedule-v08';
-    let added=0, updated=0;
-    defaultCheckpoints.forEach(p=>{
-      let target = null;
-      if(p.scheduleKey) target = state.checkpoints.find(c=>c.scheduleKey===p.scheduleKey);
-      if(!target) target = state.checkpoints.find(c=>pointIdentity(c)===pointIdentity(p));
-      if(target){
-        ['date','name','note','lat','lng','radiusM','scheduleKey'].forEach(k=>{
-          if(k==='note') { if(!norm(target[k])) target[k]=p[k]; }
-          else target[k] = p[k];
-        });
-        updated++;
-      }else{
-        state.checkpoints.push(Object.assign({}, p, {id:uid()}));
-        added++;
-      }
-    });
-    if(!state.settings.currentCheckpointId && state.checkpoints.length) state.settings.currentCheckpointId = state.checkpoints[0].id;
-    state.settings.officialScheduleVersion = ver;
-    scheduleSave();
-    if(!silent){ renderAll(); toast(`일정 포인트 보강 완료: 추가 ${added}개, 갱신 ${updated}개`); }
-    return {added, updated};
-  }
-  window.ensureOfficialSchedulePoints = ensureOfficialSchedulePoints;
   function saveState(){
     localStorage.setItem(KEY, JSON.stringify(state));
     const t = formatDateTime(nowISO());
@@ -499,12 +426,12 @@
     document.getElementById('view-write').innerHTML = `
       <div class="card">
         <h2>NFC 태그 쓰기</h2>
-        <div class="status wait"><b>긴급 복구 모드</b> · 기존 태그값이 비어 있다고 나오면 태그 안의 NDEF 값 대신 태그 고유번호(serial)를 학생 NFC ID와 연결해 출결에 사용할 수 있습니다. 쓰기가 계속 실패하면 새로 쓰지 말고 “태그 연결 복구”를 사용하세요. 현재 복구 연결 ${serialCount()}건</div>
+        <div class="status wait">안드로이드 Chrome의 HTTPS 환경에서 실제 NFC 쓰기가 가능합니다. PC나 일반 파일 실행 환경에서는 테스트 모드를 사용하세요.</div>
         <div class="grid cols2" style="margin-top:12px">
           <div>
             <label>학생 선택</label><select id="writeStudent" onchange="updateWritePreview()"><option value="">학생 선택</option>${options}</select>
             <label>태그에 기록할 값</label><input id="writeValue" placeholder="JCLA26-001">
-            <div class="row" style="margin-top:10px"><button class="primary" onclick="writeNfcTag()">NFC 태그 쓰기</button><button class="ghost" onclick="readNfcOnceForWrite()">태그 읽어 검증</button><button class="soft" onclick="readNfcRawDiagnostic()">진단 읽기</button><button class="ghost" onclick="showNfcEnvironment()">NFC 환경점검</button><button class="warn" onclick="linkSelectedStudentBySerial()">태그 연결 복구</button></div>
+            <div class="row" style="margin-top:10px"><button class="primary" onclick="writeNfcTag()">NFC 태그 쓰기</button><button class="ghost" onclick="readNfcOnceForWrite()">태그 읽어 검증</button></div>
           </div>
           <div class="scanner">
             <div class="note">현재 태그 값</div>
@@ -527,112 +454,37 @@
 
   async function ensureNfc(){
     const isSecure = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-    if(!isSecure) throw new Error('NFC 기능은 HTTPS 또는 localhost 환경에서만 사용할 수 있습니다. 지금 주소: ' + location.href);
-    if(!('NDEFReader' in window)) throw new Error('이 브라우저는 Web NFC를 지원하지 않습니다. 반드시 안드로이드 Chrome 주소창에서 직접 열어야 합니다. 카톡 내부브라우저, 삼성 인터넷, 아이폰 Safari에서는 작동하지 않을 수 있습니다.');
-  }
-
-  function nfcEnvText(){
-    const isSecure = location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-    return [
-      `URL=${location.href}`,
-      `secure=${isSecure}`,
-      `NDEFReader=${'NDEFReader' in window}`,
-      `userAgent=${navigator.userAgent || ''}`
-    ].join('\n');
-  }
-
-  window.showNfcEnvironment = () => {
-    setWriteStatus('info', 'NFC 환경 점검\n' + nfcEnvText());
-  };
-
-  async function writeWithTimeout(payload, label, timeoutMs=18000){
-    const ndef = new NDEFReader();
-    const controller = new AbortController();
-    let timer;
-    try{
-      timer = setTimeout(()=>{ try{ controller.abort(); }catch(e){} }, timeoutMs);
-      await ndef.write(payload, { overwrite:true, signal:controller.signal });
-      return {ok:true, label};
-    }catch(err){
-      return {ok:false, label, err};
-    }finally{
-      clearTimeout(timer);
-    }
+    if(!('NDEFReader' in window)) throw new Error('이 브라우저는 Web NFC를 지원하지 않습니다. 안드로이드 Chrome에서 테스트하세요.');
+    if(!isSecure) throw new Error('NFC 기능은 HTTPS 또는 localhost 환경에서만 사용할 수 있습니다.');
   }
 
   window.writeNfcTag = async () => {
     const value = normalizeTag(document.getElementById('writeValue').value);
-    if(!value){ alert('기록할 NFC ID가 없습니다. 학생명단의 NFC ID 또는 태그에 기록할 값 칸을 확인하세요.'); return; }
-    stopNfc(false); // 읽기 스캔이 켜져 있으면 쓰기와 충돌할 수 있어 먼저 중지합니다.
-    setWriteStatus('wait',`쓰기 대기 중입니다. 버튼을 누른 뒤 태그를 스마트폰 뒷면 NFC 위치에 2~3초 대세요. 기록값: ${value}`);
+    if(!value){ alert('기록할 NFC ID가 없습니다.'); return; }
+    setWriteStatus('wait','태그를 스마트폰 뒷면에 가까이 대세요. 쓰기를 시도합니다...');
     try{
       await ensureNfc();
-      const r1 = await writeWithTimeout(value, '기본 문자열 쓰기', 18000);
-      if(r1.ok){
-        document.getElementById('writeReadResult').textContent = value;
-        setWriteStatus('good',`쓰기 완료: ${value} · 기본 문자열 방식 · 이어서 “태그 읽어 검증”을 눌러 확인하세요.`);
-        beep('ok'); vibrate([80]);
-        return;
-      }
-      setWriteStatus('wait',`기본 쓰기 실패. 같은 태그를 그대로 대고 있거나 다시 대세요. 예비 방식으로 다시 시도합니다. 1차 오류: ${r1.err?.name||''} ${r1.err?.message||r1.err||''}`);
-      const r2 = await writeWithTimeout({ records: [{ recordType: 'text', data: value, lang: 'ko', encoding:'utf-8' }] }, 'NDEF text record 쓰기', 18000);
-      if(r2.ok){
-        document.getElementById('writeReadResult').textContent = value;
-        setWriteStatus('good',`쓰기 완료: ${value} · NDEF text record 방식 · 이어서 “태그 읽어 검증”을 눌러 확인하세요.`);
-        beep('ok'); vibrate([80]);
-        return;
-      }
-      throw new Error(`두 방식 모두 쓰기 실패\n1차 ${r1.err?.name||''}: ${r1.err?.message||r1.err||''}\n2차 ${r2.err?.name||''}: ${r2.err?.message||r2.err||''}`);
+      const ndef = new NDEFReader();
+      await ndef.write({ records: [{ recordType: 'text', data: value, lang: 'ko' }] });
+      document.getElementById('writeReadResult').textContent = value;
+      setWriteStatus('good',`쓰기 완료: ${value}`);
+      beep('ok'); vibrate([80]);
     }catch(err){
-      setWriteStatus('bad', nfcErrorMessage(err));
+      setWriteStatus('bad', err.message || String(err));
       beep('bad'); vibrate([80,60,80]);
     }
   };
 
   window.readNfcOnceForWrite = async () => {
-    setWriteStatus('wait','읽기 대기 중입니다. 버튼을 누른 뒤 태그를 스마트폰에 대세요.');
+    setWriteStatus('wait','읽기 대기 중입니다. 태그를 스마트폰에 대세요.');
     try{
-      await scanNfcOnce((tag, event) => {
-        const sn = event?.serialNumber || '';
-        document.getElementById('writeReadResult').textContent = tag || '(NDEF ID 없음)';
-        if(tag){
-          setWriteStatus('good',`읽기 완료: ${tag}${sn ? ' · serial=' + sn : ''}`);
-        }else if(sn){
-          setWriteStatus('wait',`태그는 감지됐지만 JCLA26 값이 없습니다. 학생을 선택한 뒤 “태그 연결 복구”를 누르면 이 태그를 학생 NFC ID와 연결할 수 있습니다. serial=${sn}`);
-        }else{
-          setWriteStatus('bad','태그는 감지됐지만 NDEF 값과 serial을 모두 읽지 못했습니다. 새 태그 또는 수동확인을 사용하세요.');
-        }
+      await scanNfcOnce((tag) => {
+        document.getElementById('writeReadResult').textContent = tag || '(빈 값)';
+        setWriteStatus('good',`읽기 완료: ${tag}`);
       });
-    }catch(err){ setWriteStatus('bad', nfcErrorMessage(err)); }
+    }catch(err){ setWriteStatus('bad', err.message || String(err)); }
   };
   function setWriteStatus(type,msg){ const el=document.getElementById('writeStatus'); if(el){ el.className=`status ${type}`; el.textContent=msg; } }
-
-  window.linkSelectedStudentBySerial = async () => {
-    const id = document.getElementById('writeStudent')?.value || '';
-    const st = state.students.find(s=>s.id===id);
-    const value = normalizeTag(document.getElementById('writeValue')?.value || st?.tagId || '');
-    if(!st || !value){ alert('먼저 학생을 선택하세요.'); return; }
-    setWriteStatus('wait',`태그 연결 복구 대기 중입니다. ${value}로 연결할 기존 태그를 스마트폰에 대세요.`);
-    try{
-      let capturedSerial = '';
-      let capturedTag = '';
-      await scanNfcOnce((tag, event) => {
-        capturedSerial = event?.serialNumber || '';
-        capturedTag = tag || '';
-      });
-      const key = serialKey(capturedSerial);
-      if(!key){ throw new Error('태그 고유번호(serial)를 읽지 못했습니다. 이 태그는 복구 연결을 사용할 수 없습니다.'); }
-      state.serialMap = state.serialMap || {};
-      state.serialMap[key] = value;
-      scheduleSave();
-      document.getElementById('writeReadResult').textContent = value;
-      setWriteStatus('good', `연결 복구 완료: 이 태그는 앞으로 ${value}로 인식됩니다.${capturedTag ? ' 기존 읽힘값=' + capturedTag : ''} serial=${capturedSerial}`);
-      beep('ok'); vibrate([80]);
-    }catch(err){
-      setWriteStatus('bad', nfcErrorMessage(err));
-      beep('bad'); vibrate([80,60,80]);
-    }
-  };
 
   function renderCheck(){
     const cp = currentCheckpoint();
@@ -641,31 +493,27 @@
     const missing = cp ? state.students.filter(st => !checkedStudentIds(cp.id).has(st.id)) : [];
     const shareText = cp ? buildAttendanceShareMessage(cp) : '체크포인트가 없습니다.';
     const gps = cp ? gpsSummary(cp) : {type:'wait', text:'체크포인트가 없습니다.', detail:''};
-    const nearest = state.settings.lastLocation ? findNearestCheckpoint(state.settings.lastLocation) : null;
-    const nearestNote = nearest ? `가장 가까운 일정 포인트: ${nearest.cp.date} · ${nearest.cp.name} · 약 ${nearest.dist}m${nearest.inside?'':' (반경 밖)'}` : '출석체크 시작 시 현재 위치 기준으로 일정 포인트를 자동 선택합니다.';
     document.getElementById('view-check').innerHTML = `
       <div class="card">
         <h2>출결 체크</h2>
-        <div class="status info"><b>v1.3 NFC 현장복구판</b> · NDEF 값이 비어 있어도 복구 연결된 태그는 학생 NFC ID로 인식합니다. GPS 실패나 데이터 불안정이 NFC 출결을 막지 않도록 유지했습니다.</div>
         <div class="grid cols2">
           <div>
             <label>체크포인트 선택</label><select id="cpSelect" onchange="changeCheckpoint(this.value)">${cpOptions}</select>
             <div class="row" style="margin-top:10px">
-              <button class="primary" onclick="startAttendanceScanQuick()">NFC 스캔 시작</button>
-              <button class="soft" onclick="startAttendanceScan()">GPS 자동선택 후 시작</button>
+              <button class="primary" onclick="startAttendanceScan()">자동 스캔 시작</button>
               <button class="secondary" onclick="finishCheckpointAndShare()">출석체크 완료·공유</button>
               <button class="ghost" onclick="mockScanPrompt()">테스트 입력</button>
               <button class="warn" onclick="clearCurrentCheckpointRecords()">현재 체크 초기화</button>
               <button class="danger" onclick="stopNfc()">스캔 중지</button>
             </div>
-            <div class="note" style="margin-top:8px">NFC 스캔 시작이 가장 안정적인 기본 모드입니다. GPS가 불안정하거나 데이터 연결 전이면 이 버튼을 먼저 사용하세요. 태그를 댈 때마다 연속 체크됩니다.</div>
+            <div class="note" style="margin-top:8px">시작 버튼을 한 번 누르면 태그를 댈 때마다 자동으로 연속 체크됩니다. 학생은 한 명씩 순서대로 태그하도록 안내하세요.</div>
             <div class="status ${gps.type}" style="margin-top:10px">
               <b>인솔자 GPS 위치확인</b><br>${escapeHtml(gps.text)}${gps.detail?`<br><span class="note">${escapeHtml(gps.detail)}</span>`:''}
               <div class="row" style="margin-top:8px">
-                <button class="small soft" onclick="checkLocationNow()">현재 위치 확인·자동선택</button>
+                <button class="small soft" onclick="checkLocationNow()">현재 위치 확인</button>
                 <button class="small ghost" onclick="setCheckpointLocationHere()">현재 위치를 기준 위치로 저장</button>
               </div>
-              <div class="note" style="margin-top:6px">학생 개인 위치가 아니라, 인솔자 스마트폰으로 출결체크를 수행한 장소만 기록합니다.<br>${escapeHtml(nearestNote)}</div>
+              <div class="note" style="margin-top:6px">학생 개인 위치가 아니라, 인솔자 스마트폰으로 출결체크를 수행한 장소만 기록합니다.</div>
             </div>
           </div>
           <div class="scanner">
@@ -695,52 +543,13 @@
   }
   window.changeCheckpoint = (id) => { state.settings.currentCheckpointId = id; scheduleSave(); renderAll(); };
 
-  async function startNfcCore(statusPrefix='NFC 스캔'){
-    const cp = currentCheckpoint(); if(!cp){ alert('체크포인트가 없습니다.'); return false; }
-    stopNfc(false);
-    setScanStatus('wait',`${statusPrefix} 준비 중입니다. 학생 명찰을 스마트폰 뒷면에 대세요.`);
-    try{
-      await ensureNfc();
-      const ndef = new NDEFReader();
-      activeNfcReader = ndef;
-      activeNfcAbort = new AbortController();
-      ndef.onreading = (event) => {
-        const tag = readTagFromEvent(event);
-        processScan(tag, 'NFC');
-      };
-      ndef.onreadingerror = () => setScanStatus('bad','태그를 읽지 못했습니다. 다시 대세요.');
-      await ndef.scan({ signal: activeNfcAbort.signal });
-      scanUi.active = true;
-      setScanStatus('good','NFC 스캔 준비 완료. 학생 명찰을 한 명씩 태그하세요.');
-      if(typeof requestWakeLock === 'function') requestWakeLock();
-      return true;
-    }catch(err){
-      scanUi.active = false;
-      setScanStatus('bad', err.message || String(err)); beep('bad');
-      return false;
-    }
-  }
-
-  window.startAttendanceScanQuick = async () => {
-    // 긴급 안정화 모드: GPS가 실패해도 NFC 출결 자체는 바로 시작합니다.
-    const ok = await startNfcCore('NFC 스캔');
-    if(!ok) return;
-    if(state.settings.gpsEnabled && state.settings.autoSelectCheckpoint){
-      refreshCurrentLocation(false).catch(e => {
-        console.warn('GPS 보조 확인 실패:', e);
-        toast('NFC 출결은 진행 중입니다. GPS 위치확인은 건너뛰었습니다.');
-      });
-    }
-  };
-
   window.startAttendanceScan = async () => {
-    let cp = currentCheckpoint(); if(!cp){ alert('체크포인트가 없습니다.'); return; }
+    const cp = currentCheckpoint(); if(!cp){ alert('체크포인트가 없습니다.'); return; }
     stopNfc(false);
-    setScanStatus('wait','GPS 일정포인트 확인 후 NFC 스캔을 시작합니다. GPS가 불안정하면 “NFC 스캔 시작”을 사용하세요.');
+    setScanStatus('wait','위치 확인 후 NFC 스캔을 시작합니다.');
     if(state.settings.gpsEnabled){
       try{
         const loc = await refreshCurrentLocation(false);
-        cp = currentCheckpoint();
         const gs = gpsSummary(cp);
         if(gs.outside){
           const go = confirm(`현재 위치가 기준 반경 밖입니다.\n${gs.text}\n그래도 출결체크를 시작할까요?`);
@@ -751,7 +560,21 @@
         if(!go){ setScanStatus('bad','위치 확인 실패로 스캔을 시작하지 않았습니다.'); return; }
       }
     }
-    await startNfcCore('GPS 확인 완료 · NFC 스캔');
+    setScanStatus('wait','NFC 스캔 중입니다. 학생 명찰을 스마트폰 뒷면에 대세요.');
+    try{
+      await ensureNfc();
+      const ndef = new NDEFReader();
+      activeNfcReader = ndef;
+      activeNfcAbort = new AbortController();
+      scanUi.active = true;
+      await ndef.scan({ signal: activeNfcAbort.signal });
+      ndef.onreading = (event) => {
+        const tag = readTextFromMessage(event.message);
+        processScan(tag, 'NFC');
+      };
+      setScanStatus('good','자동 스캔 준비 완료. 학생 명찰을 한 명씩 태그하세요.');
+      ndef.onreadingerror = () => setScanStatus('bad','태그를 읽지 못했습니다. 다시 대세요.');
+    }catch(err){ setScanStatus('bad', err.message || String(err)); beep('bad'); }
   };
 
   function stopNfc(show=true){
@@ -764,130 +587,35 @@
 
   async function scanNfcOnce(cb){
     await ensureNfc();
-    stopNfc(false);
     const ndef = new NDEFReader();
     const controller = new AbortController();
-    let done = false;
-    return new Promise(async (resolve, reject) => {
-      const timer = setTimeout(()=>{
-        if(done) return;
-        done = true;
-        try{ controller.abort(); }catch(e){}
-        reject(new Error('20초 동안 태그를 읽지 못했습니다. 버튼을 누른 뒤 태그를 스마트폰 뒷면 NFC 위치에 다시 대세요.'));
-      }, 20000);
-      ndef.onreading = (event) => {
-        if(done) return;
-        done = true;
-        clearTimeout(timer);
-        const tag = readTagFromEvent(event);
-        try{ controller.abort(); }catch(e){}
-        cb(tag, event);
-        resolve(tag);
-      };
-      ndef.onreadingerror = () => {
-        // 바로 실패 처리하지 않고 20초까지 다시 댈 수 있게 둡니다.
-        const el = document.getElementById('writeStatus');
-        if(el){ el.className='status wait'; el.textContent='태그를 읽지 못했습니다. 태그 위치를 조금 옮겨 다시 대세요.'; }
-      };
-      try{ await ndef.scan({ signal: controller.signal }); }
-      catch(err){ if(!done){ done=true; clearTimeout(timer); reject(err); } }
-    });
+    await ndef.scan({ signal: controller.signal });
+    ndef.onreading = (event) => {
+      const tag = readTextFromMessage(event.message);
+      controller.abort();
+      cb(tag);
+    };
+    setTimeout(()=>{ try{controller.abort();}catch(e){} }, 20000);
   }
 
   function readTextFromMessage(message){
-    const decoded = [];
     for(const record of message.records){
-      const value = decodeNdefRecord(record);
-      if(value) decoded.push(value);
-    }
-    for(const value of decoded){
-      const tag = normalizeTag(value);
-      if(/^JCLA26-\d{3}$/.test(tag)) return tag;
-    }
-    return normalizeTag(decoded[0] || '');
-  }
-
-  function recordDataView(record){
-    if(!record || !record.data) return null;
-    const d = record.data;
-    try{
-      if(d instanceof DataView) return new Uint8Array(d.buffer, d.byteOffset, d.byteLength);
-      if(d instanceof ArrayBuffer) return new Uint8Array(d);
-      return d;
-    }catch(e){ return d; }
-  }
-
-  function decodeNdefRecord(record){
-    try{
-      const data = recordDataView(record);
-      if(!data) return '';
       if(record.recordType === 'text'){
         const dec = new TextDecoder(record.encoding || 'utf-8');
-        return dec.decode(data);
+        return normalizeTag(dec.decode(record.data));
       }
-      if(record.recordType === 'url' || record.recordType === 'absolute-url'){
+      if(record.recordType === 'url'){
         const dec = new TextDecoder('utf-8');
-        return dec.decode(data);
+        return normalizeTag(dec.decode(record.data));
       }
-      const encs = [record.encoding || 'utf-8', 'utf-8', 'utf-16le'];
-      for(const enc of encs){
-        try{
-          const txt = new TextDecoder(enc).decode(data).replace(/\u0000/g,'').trim();
-          if(txt) return txt;
-        }catch(e){}
-      }
-    }catch(e){ console.warn('NDEF record decode failed', e, record); }
-    return '';
-  }
-
-  function describeNdefMessage(message){
-    const rows = [];
-    for(const record of message.records){
-      rows.push(`type=${record.recordType || ''}, media=${record.mediaType || ''}, text=${decodeNdefRecord(record) || '(해석 불가)'}`);
     }
-    return rows.join('\n') || '(NDEF record 없음)';
-  }
-
-  window.readNfcRawDiagnostic = async () => {
-    setWriteStatus('wait','진단 읽기 대기 중입니다. 버튼을 누른 뒤 태그를 스마트폰 뒷면 NFC 위치에 대세요.');
-    try{
-      await ensureNfc();
-      stopNfc(false);
-      const ndef = new NDEFReader();
-      const controller = new AbortController();
-      let done = false;
-      const timer = setTimeout(()=>{ if(!done){ done=true; try{controller.abort();}catch(e){}; setWriteStatus('bad','20초 동안 태그를 읽지 못했습니다.'); } }, 20000);
-      ndef.onreading = (event) => {
-        if(done) return; done = true; clearTimeout(timer);
-        const msg = describeNdefMessage(event.message);
-        const sn = event?.serialNumber || '';
-        const tag = readTagFromEvent(event);
-        try{ controller.abort(); }catch(e){}
-        document.getElementById('writeReadResult').textContent = tag || '(ID 없음)';
-        setWriteStatus('info', `진단 결과\nserial=${sn || '(없음)'}\nreadTag=${tag || '(ID 없음)'}\n${msg}`);
-      };
-      ndef.onreadingerror = () => setWriteStatus('wait','읽기 오류가 발생했습니다. 태그 위치를 조금 옮겨 다시 대세요.');
-      await ndef.scan({signal: controller.signal});
-    }catch(err){ setWriteStatus('bad', nfcErrorMessage(err)); }
-  };
-
-  function nfcErrorMessage(err){
-    const name = err?.name || '';
-    const msg = err?.message || String(err || '');
-    const env = '\n\n[환경]\n' + nfcEnvText();
-    if(/NotAllowedError/i.test(name+msg)) return 'NFC 권한이 차단되었거나 Chrome이 NFC 사용을 허용받지 못했습니다. 주소창 왼쪽 자물쇠/사이트 설정에서 NFC 권한을 허용하고, Android 설정에서 NFC가 켜져 있는지 확인하세요. 원문: ' + msg + env;
-    if(/NotSupportedError/i.test(name+msg)) return '이 태그 형식 또는 현재 브라우저가 Web NFC 읽기/쓰기를 지원하지 않습니다. Web NFC는 NDEF 호환 태그에서 동작하므로, 빈 태그라도 NDEF 포맷이 아니거나 잠긴 태그라면 실패할 수 있습니다. 원문: ' + msg + env;
-    if(/AbortError/i.test(name+msg)) return '시간이 초과되었거나 작업이 중지되었습니다. 버튼을 먼저 누른 뒤 20초 안에 태그를 스마트폰 뒷면 NFC 위치에 대세요.' + env;
-    if(/NetworkError|NotReadableError|InvalidStateError/i.test(name+msg)) return '태그를 안정적으로 읽거나 쓰지 못했습니다. 케이스를 벗기고 NFC 위치에 2~3초 대거나 태그 위치를 조금 옮겨 다시 시도하세요. 원문: ' + msg + env;
-    if(/SecurityError/i.test(name+msg)) return 'HTTPS가 아닌 주소이거나 보안 환경이 아닙니다. 반드시 Chrome에서 https://ekoredu-maker.github.io/NFC_HTTPS/ 주소로 여세요. 원문: ' + msg + env;
-    return (name ? name + ': ' : '') + msg + env;
+    return '';
   }
 
   function processScan(rawTag, method='NFC'){
     const tag = normalizeTag(rawTag);
     const cp = currentCheckpoint();
-    if(!cp){ setScanStatus('bad','체크포인트가 없습니다.'); beep('bad'); return; }
-    if(!tag){ setScanStatus('bad','태그는 감지되었지만 읽을 수 있는 JCLA26 값이 없습니다. NFC 쓰기 탭의 진단 읽기로 확인하거나, 현장에서는 학생명 옆 수동확인을 사용하세요.'); beep('bad'); return; }
+    if(!tag){ setScanStatus('bad','태그 값이 비어 있습니다.'); beep('bad'); return; }
     const st = state.students.find(s => normalizeTag(s.tagId) === tag);
     if(!st){
       setLastScan(tag);
@@ -1150,46 +878,19 @@
     }
     return {status:'현재 위치만 확인', type:'info', text:`현재 위치 확인됨 · ${acc}`, detail:`기준 위치가 아직 저장되지 않았습니다. 필요하면 “현재 위치를 기준 위치로 저장”을 누르세요. 확인시각 ${gpsTimeText(loc)}`, distanceM:'', outside:false};
   }
-
-  function findNearestCheckpoint(loc=state.settings.lastLocation){
-    if(!loc) return null;
-    let best = null;
-    state.checkpoints.filter(hasCheckpointGps).forEach(c=>{
-      const dist = haversineM(loc.lat, loc.lng, Number(c.lat), Number(c.lng));
-      const radius = radiusFor(c);
-      const candidate = {cp:c, dist, radius, inside: dist <= radius};
-      if(!best || dist < best.dist) best = candidate;
-    });
-    return best;
-  }
-  function autoSelectCheckpointByLocation(loc=state.settings.lastLocation, silent=false){
-    if(!state.settings.autoSelectCheckpoint) return null;
-    const best = findNearestCheckpoint(loc);
-    if(best && best.inside){
-      const before = state.settings.currentCheckpointId;
-      state.settings.currentCheckpointId = best.cp.id;
-      if(!silent && before !== best.cp.id) toast(`가까운 일정 포인트 자동 선택: ${best.cp.date} ${best.cp.name} · 약 ${best.dist}m`);
-      return best;
-    }
-    return null;
-  }
   function gpsSummary(cp){ return evaluateGps(cp, state.settings.lastLocation); }
   function positionPromise(){
     return new Promise((resolve,reject)=>{
       if(!('geolocation' in navigator)) return reject(new Error('이 브라우저는 GPS 위치확인을 지원하지 않습니다.'));
-      navigator.geolocation.getCurrentPosition(resolve, reject, {enableHighAccuracy:false, timeout:10000, maximumAge:30000});
+      navigator.geolocation.getCurrentPosition(resolve, reject, {enableHighAccuracy:true, timeout:12000, maximumAge:5000});
     });
   }
   async function refreshCurrentLocation(showToast=true){
     const pos = await positionPromise();
     const loc = {lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: pos.coords.accuracy, time: nowISO()};
     state.settings.lastLocation = loc;
-    const auto = autoSelectCheckpointByLocation(loc, true);
     scheduleSave();
-    if(showToast){
-      if(auto) toast(`위치 확인 · 가까운 일정 포인트: ${auto.cp.date} ${auto.cp.name} · 약 ${auto.dist}m`);
-      else toast(`위치 확인: 정확도 ±${Math.round(loc.accuracy||0)}m`);
-    }
+    if(showToast) toast(`위치 확인: 정확도 ±${Math.round(loc.accuracy||0)}m`);
     renderAll();
     return loc;
   }
@@ -1306,10 +1007,9 @@
           <label class="row"><input type="checkbox" id="setVib" ${state.settings.useVibration?'checked':''} style="width:auto"> 진동 사용</label>
           <label class="row"><input type="checkbox" id="setMask" ${state.settings.maskNames?'checked':''} style="width:auto"> 화면·출력 이름 마스킹</label>
           <label class="row"><input type="checkbox" id="setGps" ${state.settings.gpsEnabled?'checked':''} style="width:auto"> 출결 시작 시 GPS 위치확인</label>
-          <label class="row"><input type="checkbox" id="setAutoCp" ${state.settings.autoSelectCheckpoint?'checked':''} style="width:auto"> GPS로 가까운 일정 포인트 자동 선택</label>
           <div><label>기본 GPS 허용반경(m)</label><input id="setRadius" type="number" value="${Number(state.settings.defaultRadiusM||200)}" min="30" step="10"></div>
         </div>
-        <div class="row" style="margin-top:12px"><button class="primary" onclick="saveSettings()">설정 저장</button><button class="soft" onclick="ensureOfficialSchedulePoints(false)">일정 포인트 보강</button><button class="ghost" onclick="resetCheckpoints()">기본 체크포인트 복원</button><button class="danger" onclick="factoryReset()">전체 초기화</button></div>
+        <div class="row" style="margin-top:12px"><button class="primary" onclick="saveSettings()">설정 저장</button><button class="ghost" onclick="resetCheckpoints()">기본 체크포인트 복원</button><button class="danger" onclick="factoryReset()">전체 초기화</button></div>
       </div>
       <div class="card">
         <div class="between"><h2>체크포인트 관리</h2><button class="soft noPrint" onclick="openCheckpointModal()">체크포인트 추가</button></div>
@@ -1328,12 +1028,10 @@
     state.settings.useVibration = document.getElementById('setVib').checked;
     state.settings.maskNames = document.getElementById('setMask').checked;
     state.settings.gpsEnabled = document.getElementById('setGps')?.checked ?? true;
-    state.settings.autoSelectCheckpoint = document.getElementById('setAutoCp')?.checked ?? true;
     state.settings.defaultRadiusM = Number(document.getElementById('setRadius')?.value) || 200;
     scheduleSave(); renderAll(); toast('설정을 저장했습니다.');
   };
-  window.resetCheckpoints = () => { if(confirm('기본 체크포인트로 복원할까요? 기존 체크포인트는 삭제됩니다.')){ state.checkpoints = defaultCheckpoints.map(c=>Object.assign({},c,{id:uid()}));
-      state.settings.officialScheduleVersion = '2026-jcla-schedule-v08'; state.settings.currentCheckpointId = state.checkpoints[0]?.id || null; scheduleSave(); renderAll(); } };
+  window.resetCheckpoints = () => { if(confirm('기본 체크포인트로 복원할까요? 기존 체크포인트는 삭제됩니다.')){ state.checkpoints = defaultCheckpoints.map(c=>Object.assign({},c,{id:uid()})); state.settings.currentCheckpointId = state.checkpoints[0]?.id || null; scheduleSave(); renderAll(); } };
   window.factoryReset = () => { if(confirm('학생명단, 체크포인트, 출결기록, 설정을 모두 초기화할까요?')){ localStorage.removeItem(KEY); state = loadState(); renderAll(); } };
 
   window.openCheckpointModal = (id='') => {
@@ -1451,7 +1149,7 @@
     try{
       const text = await file.text(); const obj = JSON.parse(text);
       if(!Array.isArray(obj.students) || !Array.isArray(obj.checkpoints) || !Array.isArray(obj.records)) throw new Error('백업 파일 형식이 맞지 않습니다.');
-      if(confirm('현재 데이터를 백업 파일로 교체할까요?')){ state = {students:obj.students, checkpoints:obj.checkpoints, records:obj.records, settings:Object.assign(defaultSettings(), obj.settings||{}), ops:Object.assign(defaultOps(), obj.ops||{}), serialMap:(obj.serialMap&&typeof obj.serialMap==='object')?obj.serialMap:{}}; scheduleSave(); renderAll(); }
+      if(confirm('현재 데이터를 백업 파일로 교체할까요?')){ state = {students:obj.students, checkpoints:obj.checkpoints, records:obj.records, settings:Object.assign(defaultSettings(), obj.settings||{}), ops:Object.assign(defaultOps(), obj.ops||{})}; scheduleSave(); renderAll(); }
     }catch(e){ alert('복원 실패: ' + e.message); }
     ev.target.value='';
   };
